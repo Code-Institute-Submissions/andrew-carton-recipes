@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Cookbook App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    
+    <script>
+        function addIngredient() {
+            var id = document.getElementById("ingredient");
+        
+            var tid = document.getElementById("ingredient_table");
+            tid.innerHTML += "<tr><td>" + id.value + "</td></tr>";
+            alert(id.value);
+        }
+    </script>
+    </head>
+    
+<body>
+     <table id="ingredient_table">
+         
+     </table>
+     <br><br>
+     <form action="javascript:addIngredient();" method="POST">
+      <input  type="text" id="ingredient" name="ingredient" placeholder="">
+     
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+
+
+</html>
