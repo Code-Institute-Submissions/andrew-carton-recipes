@@ -6,7 +6,12 @@
     </head>
     
 <body>
-    
+    <h4>Recipe List</h4>
+    <div style="padding:100px">
+    {% for x in recipes %}
+    <a href="recipe?id={% print x.id %}">{% print x.name %} </a>
+    {% endfor %}
+    </div>
 </body>
 
 

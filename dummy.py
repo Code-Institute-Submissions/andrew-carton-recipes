@@ -22,9 +22,13 @@ for row in result:
 
     select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
     res = conn.execute(select_st)
-    for _row in res: print _row
+    for _row in res:
+        select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+        res2 = conn.execute(select_st2)
+        for _row2 in res2:
+            print _row2
 
-    select_st = select([directions_list]).where(ingredients_list.c.recipe_id == row.id)
+    select_st = select([directions_list]).where(directions_list.c.recipe_id == row.id)
     res = conn.execute(select_st)
     for _row in res: print _row
 

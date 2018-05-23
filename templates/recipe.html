@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Cookbook App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
+    
+    </head>
+    
+<body>
+    <h4>{% print recipe.name %}</h4>
+    
+    <table>
+    {% for y in recipe.ingredients %}
+    <tr>
+       <td>{% print y.name %}</td>
+       <td>{% print y.allergen %}</td>
+       <td>{% print y.amount %}</td>
+       </tr>
+    {% endfor %}
+    </tr></table><table>
+    {% for y in recipe.directions %}
+    <tr>
+        <td>{% print y.number %}</td>
+        <td>{% print y.text %}</td>
+       </tr>
+    {% endfor %}
+    </table>
+    
+</body>
+
+
+</html>
