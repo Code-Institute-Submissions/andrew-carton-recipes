@@ -16,6 +16,7 @@ recipes = Table('recipes', metadata,
         Column('id', Integer, primary_key=True),
         Column('name', String, nullable=False),
         Column('country', String, nullable=False),
+        Column('course', String, nullable=False),
         Column('views', Integer, nullable=False),
         Column('user_id', None, ForeignKey('users.id'))
 )

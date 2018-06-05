@@ -14,7 +14,7 @@ conn = engine.connect()
 #      recipes.c.name == 'Stew')
 #res = conn.execute(del_st)
 
-   
+
 s = select([recipes])
 result = conn.execute(s)
 for row in result:
@@ -32,4 +32,10 @@ for row in result:
     res = conn.execute(select_st)
     for _row in res: print _row
 
+
+s = select([users])
+result = conn.execute(s)
+for row in result:
+    print(row.name)
+    
 

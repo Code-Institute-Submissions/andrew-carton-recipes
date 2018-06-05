@@ -22,7 +22,7 @@ def do_admin_register():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
     conn = engine.connect() 
-    s = select([recipes]).where(users.c.name == POST_USERNAME)
+    s = select([users]).where(users.c.name == POST_USERNAME)
     result = conn.execute(s)
     rows = result.fetchall()
     lenro = len(rows)
@@ -40,7 +40,7 @@ def do_admin_login():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
     conn = engine.connect() 
-    s = select([recipes]).where((users.c.name == POST_USERNAME) & (users.c.password == POST_PASSWORD))
+    s = select([users]).where((users.c.name == POST_USERNAME) & (users.c.password == POST_PASSWORD))
     result = conn.execute(s)
     rows = result.fetchall()
     lenro = len(rows)
@@ -100,8 +100,6 @@ def list_recipes():
     result = conn.execute(s)
     rs = []
     for row in result:
-       
-        
         select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
         res = conn.execute(select_st)
         
@@ -115,15 +113,15 @@ def list_recipes():
                 ings.append(ing)
 
     
-    select_st = select([directions_list]).where(directions_list.c.recipe_id == row.id)
-    res = conn.execute(select_st)
-    dirs = []
-    for _row in res:
-        dir = Direction(_row.number, _row.text)
-        dirs.append(dir)
+        select_st = select([directions_list]).where(directions_list.c.recipe_id == row.id)
+        res = conn.execute(select_st)
+        dirs = []
+        for _row in res:
+            dir = Direction(_row.number, _row.text)
+            dirs.append(dir)
     
-    recipe = Recipe(row.id, row.name, row.country, row.views, ings, dirs)
-    rs.append(recipe)
+        recipe = Recipe(row.id, row.name, row.country, row.views, ings, dirs)
+        rs.append(recipe)
     
     return render_template('listrecipes.html', recipes=rs)
     
@@ -132,7 +130,7 @@ def list_recipes():
 def jsoninsertrecipe():
     content = request.get_json()
     conn = engine.connect() 
-    ins = recipes.insert().values(name=content['name'], country=content['country'], views=int(0), user_id=1)
+    ins = recipes.insert().values(name=content['name'], country=content['country'], course=content['course'], views=int(0), user_id=1)
     res = conn.execute(ins)
     recipepkey = res.inserted_primary_key
     
