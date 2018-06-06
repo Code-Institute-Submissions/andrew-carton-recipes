@@ -80,7 +80,7 @@ def recipe():
             dir = Direction(_row.number, _row.text)
             dirs.append(dir)
         
-        recipe = Recipe(id, row.name, row.country, row.views, ings, dirs)
+        recipe = Recipe(id, row.name, row.country, row.course, row.views, ings, dirs)
     
     return render_template('recipe.html', recipe=recipe)
     
@@ -120,7 +120,7 @@ def list_recipes():
             dir = Direction(_row.number, _row.text)
             dirs.append(dir)
     
-        recipe = Recipe(row.id, row.name, row.country, row.views, ings, dirs)
+        recipe = Recipe(row.id, row.name, row.country, row.course, row.views, ings, dirs)
         rs.append(recipe)
     
     return render_template('listrecipes.html', recipes=rs)
