@@ -1,11 +1,12 @@
 from flask import Flask, render_template
 from flask import jsonify, request, session
-from sqlalchemy.sql import table, column, select, update, insert
+from sqlalchemy.sql import table, column, select, update, insert, func
 from tabledef import *
 from ingredient import *
 from recipe import *
 from direction import *
-import os
+from recipemin import *
+import os, json
 
 app = Flask(__name__)
 engine = create_engine('sqlite:///recipes.db', echo=True)
@@ -51,7 +52,23 @@ def do_admin_login():
         return ('Wrong password <a href=\'/\'>Try again</a>')
     return home()
 
-
+def jdefault(o):
+    return o.__dict__
+    
+    
+@app.route('/searchbycourse')
+def searchbycourse():
+    course = request.args.get('course');
+    conn = engine.connect() 
+    s = select([recipes]).where(func.lower(recipes.c.course) == func.lower(course))
+    
+    rlist = []
+    result = conn.execute(s)
+    for row in result:
+        r = RecipeMin(row.id, row.name)
+        rlist.append(r)
+        
+    return json.dumps(rlist, default=jdefault);
  
 @app.route('/recipe')
 def recipe():

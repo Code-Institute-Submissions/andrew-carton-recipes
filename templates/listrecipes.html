@@ -4,7 +4,34 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     
     </head>
-    
+    <script>
+        
+        function searchByCourse()
+        {
+            var courseid = document.getElementById("course");
+            
+            var sstr = "/searchbycourse?course=";
+            
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            sstr += courseid.value;
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    var recipesdiv = document.getElementById("recipes");
+                    var str = "<ul>";
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    }
+                    str += "</ul>";
+                    recipesdiv.innerHTML = str;
+                }
+            };
+            xmlhttp.open("GET", sstr, true);
+            xmlhttp.send();
+        }
+        
+    </script>
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
      
@@ -30,14 +57,25 @@
          </div>
       </nav>
       <br><br><br>
-      
+      <div id="filter" style="padding:10px;">
+      <form action="javascript:searchByCourse();" method="POST">
+          <h5>Filter by Course:</h5>
+          <input type="text" name="course" id="course">
+          <input type="submit" value="Search">
+      </form>
+      <br>
+     </div>
+    <br>
     <h4>Recipe List</h4>
-    <div style="padding:20px">
+    <div class="recipes" id="recipes" style="padding:20px">
     <ul>
     {% for x in recipes %}
     <li><a href="recipe?id={% print x.id %}">{% print x.name %} </a></li>
     {% endfor %}
     </ul>
+    </div>
+    <div id="result" class="result">
+        
     </div>
 </body>
 
