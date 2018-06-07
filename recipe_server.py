@@ -54,8 +54,56 @@ def do_admin_login():
 
 def jdefault(o):
     return o.__dict__
+
+@app.route('/searchexcludeallergen')
+def searchexcludeallergen():
+    allergen = request.args.get('allergen');
+    s = select([recipes])
+    conn = engine.connect() 
+    result = conn.execute(s)
+    rs = []
+    found = 0
+    for row in result:
+        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        res = conn.execute(select_st)
+        
+        for _row in res:
+            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            res2 = conn.execute(select_st2)
+            for _row2 in res2:
+                if (allergen.lower() == _row2.allergen.lower()):
+                    found = 1
+        
+        if (found == 0):
+            r = RecipeMin(row.id, row.name)
+            rs.append(r)
+        else:
+            found = 0
+            
+            
+    return json.dumps(rs, default=jdefault)   
     
-    
+@app.route('/searchbyingredient')
+def searchbyingredient():
+    ingredient = request.args.get('ingredient');
+    s = select([recipes])
+    conn = engine.connect() 
+    result = conn.execute(s)
+    rs = []
+    for row in result:
+        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        res = conn.execute(select_st)
+        
+        for _row in res:
+            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            res2 = conn.execute(select_st2)
+            for _row2 in res2:
+                if (ingredient.lower() == _row2.name.lower()):
+                    r = RecipeMin(row.id, row.name)
+                    rs.append(r)
+
+    return json.dumps(rs, default=jdefault)    
+        
 @app.route('/searchbycourse')
 def searchbycourse():
     course = request.args.get('course');

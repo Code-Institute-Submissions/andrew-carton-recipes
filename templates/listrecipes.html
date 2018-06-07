@@ -5,6 +5,55 @@
     
     </head>
     <script>
+        function searchByAllergen()
+        {
+            var allergenid = document.getElementById("allergen");
+            
+            var sstr = "/searchexcludeallergen?allergen=";
+            
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            sstr += allergenid.value;
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    var recipesdiv = document.getElementById("recipes");
+                    var str = "<ul>";
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    }
+                    str += "</ul>";
+                    recipesdiv.innerHTML = str;
+                }
+            };
+            xmlhttp.open("GET", sstr, true);
+            xmlhttp.send();
+        }
+        
+        function searchByIngredient()
+        {
+            var ingredientid = document.getElementById("ingredient");
+            
+            var sstr = "/searchbyingredient?ingredient=";
+            
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            sstr += ingredientid.value;
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    var recipesdiv = document.getElementById("recipes");
+                    var str = "<ul>";
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    }
+                    str += "</ul>";
+                    recipesdiv.innerHTML = str;
+                }
+            };
+            xmlhttp.open("GET", sstr, true);
+            xmlhttp.send();
+        }
         
         function searchByCourse()
         {
@@ -59,12 +108,29 @@
       <br><br><br>
       <div id="filter" style="padding:10px;">
       <form action="javascript:searchByCourse();" method="POST">
-          <h5>Filter by Course:</h5>
+          <h5>Search by Course:</h5>
           <input type="text" name="course" id="course">
           <input type="submit" value="Search">
       </form>
       <br>
      </div>
+     <div id="filter" style="padding:10px;">
+      <form action="javascript:searchByIngredient();" method="POST">
+          <h5>Search by Ingredient:</h5>
+          <input type="text" name="ingredient" id="ingredient">
+          <input type="submit" value="Search">
+      </form>
+      <br>
+     </div>
+     <div id="filter" style="padding:10px;">
+      <form action="javascript:searchByAllergen();" method="POST">
+          <h5>Search Exclude Allergen:</h5>
+          <input type="text" name="allergen" id="allergen">
+          <input type="submit" value="Search">
+      </form>
+      <br>
+     </div>
+     
     <br>
     <h4>Recipe List</h4>
     <div class="recipes" id="recipes" style="padding:20px">
