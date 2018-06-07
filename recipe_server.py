@@ -86,7 +86,7 @@ def recipe():
     
 @app.route('/insertrecipe')
 def insert_recipe():
-    return render_template('insertrecipe.html')
+    return render_template('insertrecipe.html', session=session)
 
 @app.route("/logout")
 def logout():
