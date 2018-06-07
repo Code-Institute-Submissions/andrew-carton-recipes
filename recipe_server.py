@@ -60,7 +60,13 @@ def recipe():
     s = select([recipes]).where(recipes.c.id == id)
     result = conn.execute(s)
     recipe = ""
+    author = ""
     for row in result:
+        sx = select([users]).where(users.c.id == row.user_id)
+        resx = conn.execute(sx)
+        for _rowx in resx:
+            author = _rowx.name
+            
         select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == id)
         res = conn.execute(select_st)
             
@@ -80,9 +86,9 @@ def recipe():
             dir = Direction(_row.number, _row.text)
             dirs.append(dir)
         
-        recipe = Recipe(id, row.name, row.country, row.course, row.views, ings, dirs)
+        recipe = Recipe(id, row.name, row.country, row.course, row.views, row.user_id, ings, dirs)
     
-    return render_template('recipe.html', recipe=recipe)
+    return render_template('recipe.html', recipe=recipe, author=author)
     
 @app.route('/insertrecipe')
 def insert_recipe():
@@ -120,7 +126,7 @@ def list_recipes():
             dir = Direction(_row.number, _row.text)
             dirs.append(dir)
     
-        recipe = Recipe(row.id, row.name, row.country, row.course, row.views, ings, dirs)
+        recipe = Recipe(row.id, row.name, row.country, row.course, row.views, row.user_id, ings, dirs)
         rs.append(recipe)
     
     return render_template('listrecipes.html', recipes=rs)
@@ -129,8 +135,16 @@ def list_recipes():
 @app.route('/jsoninsertrecipe', methods = ['POST'])
 def jsoninsertrecipe():
     content = request.get_json()
+    conn = engine.connect()
+    id = 1
+    s = select([users]).where(users.c.name == content['author'])
+    result = conn.execute(s)
+    for row in result:
+        print(row.id)
+        id = row.id;
+    
     conn = engine.connect() 
-    ins = recipes.insert().values(name=content['name'], country=content['country'], course=content['course'], views=int(0), user_id=1)
+    ins = recipes.insert().values(name=content['name'], country=content['country'], course=content['course'], views=int(0), user_id=id)
     res = conn.execute(ins)
     recipepkey = res.inserted_primary_key
     
