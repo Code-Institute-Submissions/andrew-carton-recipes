@@ -158,7 +158,71 @@ def recipe():
 @app.route('/insertrecipe')
 def insert_recipe():
     return render_template('insertrecipe.html', session=session)
+    
+@app.route('/ingredientstats')
+def ingredientstats():
+    conn = engine.connect() 
+    s = select([recipes])
+    result = conn.execute(s)
+    
+    ings = []
+    for row in result:
+        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        res = conn.execute(select_st)
+            
+        
+        for _row in res:
+            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            res2 = conn.execute(select_st2)
+            for _row2 in res2:
+                found = 0
+                for i in ings:
+                   
+                    if i['ingredient'].lower() == _row2.name.lower():
+                        print("Ing " + i['ingredient'].lower() + " " + _row2.name.lower())
+                        i['amount'] = i['amount'] + 1
+                        found = 1
+                        break
+                    else:
+                        found = 0
+                        
+                if (found == 0):
+                    d = {}
+                    d['ingredient'] = _row2.name
+                    d['amount'] = 1;
+                    ings.append(d)
+                
+    
 
+    return json.dumps(ings)
+    
+@app.route('/coursestats')
+def coursestats():
+    conn = engine.connect() 
+    s = select([recipes])
+    result = conn.execute(s)
+    crs = []
+    
+    
+    for row in result:
+        found = 0
+        for i in crs:
+            if i['course'].lower() == row.course.lower():
+                i['amount'] = i['amount'] + 1
+                found = 1
+                break
+            else:
+                found = 0
+                
+        if (found == 0):
+            d = {}
+            d['course'] = row.course
+            d['amount'] = 1;
+            crs.append(d)
+        
+    
+    return json.dumps(crs)
+    
 @app.route('/graphs')
 def graphs():
     return render_template('graphs.html')
