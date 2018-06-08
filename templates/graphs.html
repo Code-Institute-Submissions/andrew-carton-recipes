@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Cookbook App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+   
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script>
+      
+      function dothis()
+      {
+          var data = [{"letter":"q","presses":1},{"letter":"w","presses":5},{"letter":"e","presses":2}];
+          var width = 300, height = 300, radius = Math.min(width, height) / 2;
+          var color = d3.scaleOrdinal(d3.schemeCategory10);
+          var pie = d3.pie().value(function(d) { return d.presses; })(data);
+          var arc = d3.arc().outerRadius(radius - 10).innerRadius(0);
+          var labelArc = d3.arc().outerRadius(radius - 40).innerRadius(radius - 40);
+          var svg = d3.select("#pie").append("svg").attr("width", width).attr("height", height).append("g")
+		              .attr("transform", "translate(" + width/2 + "," + height/2 +")");
+		              
+		  var g = svg.selectAll("arc").data(pie).enter().append("g")
+	                 .attr("class", "arc");
+	       g.append("path").attr("d", arc).style("fill", function(d) { return color(d.data.letter);});
+	       
+	       g.append("text").attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; }).text(function(d) { return d.data.letter;})
+	                        .style("fill", "#fff");
+	                        
+      }
+      
+      </script>
+      
+       
+    </head>
+    
+<body onload="dothis()">
+    
+   
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+               <li class="nav-item">
+                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/listrecipes">Recipe List</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/insertrecipe">Insert Recipe</a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link" href="/graphs">Graphs</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="/logout">Logout</a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <br><br><br>
+     <div id="pie"></div>
+      
+</body>
+
+
+</html>

@@ -159,6 +159,10 @@ def recipe():
 def insert_recipe():
     return render_template('insertrecipe.html', session=session)
 
+@app.route('/graphs')
+def graphs():
+    return render_template('graphs.html')
+    
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
