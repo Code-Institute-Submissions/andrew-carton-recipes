@@ -195,6 +195,33 @@ def ingredientstats():
     
 
     return json.dumps(ings)
+
+@app.route('/countrystats')
+def countrystats():
+    conn = engine.connect() 
+    s = select([recipes])
+    result = conn.execute(s)
+    crs = []
+    
+    
+    for row in result:
+        found = 0
+        for i in crs:
+            if i['country'].lower() == row.country.lower():
+                i['amount'] = i['amount'] + 1
+                found = 1
+                break
+            else:
+                found = 0
+                
+        if (found == 0):
+            d = {}
+            d['country'] = row.country
+            d['amount'] = 1;
+            crs.append(d)
+        
+    
+    return json.dumps(crs)
     
 @app.route('/coursestats')
 def coursestats():

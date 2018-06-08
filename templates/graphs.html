@@ -148,7 +148,7 @@
                  
                       g.append("text")
                         .attr("class", "name-text")
-                        .text(`${d.data.ingredient}`)
+                        .text(`${d.data.country}`)
                         .attr('text-anchor', 'middle')
                         .attr('dy', '-1.2em');
                   
@@ -187,7 +187,7 @@
             
                 }
             }
-                xmlhttp.open("GET", "/ingredientstats", true);
+                xmlhttp.open("GET", "/countrystats", true);
                 xmlhttp.send(); 
             }
     
@@ -235,10 +235,14 @@
          </div>
       </nav>
       <br><br><br>
+      <center>
+     <h4>Course Stats:</h4>
      <div id="coursestats"></div><br><br>
-      <div id="ingredientstats"></div><br><br>
+     <h4>Ingredient Stats:</h4> 
+     <div id="ingredientstats"></div><br><br>
+     <h4>Country Stats:</h4>
      <div id="chart"></div>
-     
+     </center>
 </body>
 
 
