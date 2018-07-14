@@ -186,14 +186,13 @@ def ingredientstats():
                 for i in ings:
                    
                     if i['ingredient'].lower() == _row2.name.lower():
-                        print("Ing " + i['ingredient'].lower() + " " + _row2.allergen.lower())
                         i['amount'] = i['amount'] + 1
                         found = 1
                         break
                     else:
                         found = 0
                         
-                if (found == 0):
+                if (found == 0 and _row2.allergen != ''):
                     d = {}
                     d['ingredient'] = _row2.allergen
                     d['amount'] = 1;
@@ -307,7 +306,6 @@ def jsoninsertrecipe():
     s = select([users]).where(users.c.name == content['author'])
     result = conn.execute(s)
     for row in result:
-        print(row.id)
         id = row.id;
     
     conn = engine.connect() 

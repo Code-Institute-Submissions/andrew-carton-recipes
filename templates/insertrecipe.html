@@ -23,6 +23,9 @@
             ingobj.amount = amid.value;
             ingrlist = ingrlist.concat(ingobj);
             tid.innerHTML += "<tr><td>" + ingnum++ + "</td><td>" + id.value + "</td><td>" + amid.value + "</td><td>" + aid.value + "</td></tr>";
+            id.value = '';
+            aid.value = '';
+            amid.value = '';
         }
         
         var dirnum = 1;
@@ -35,6 +38,7 @@
             var dirobj = new Object();
             dirobj.direction = id.value;
             dirlist = dirlist.concat(dirobj);
+            id.value = '';
             
         }
         

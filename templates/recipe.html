@@ -38,11 +38,14 @@
         <h5>Views: {% print recipe.views %}</h5>
         <h5> Ingredient List:</h5>
         <table style="padding:20px">
+        <tr>
+            <th style="padding:0 15px 0 15px;">Ingredient</th>
+            <th style="padding:0 15px 0 15px;">Amount</th>
+        </tr>
         {% for y in recipe.ingredients %}
         <tr>
-           <td>{% print y.name %}</td>
-           <td>{% print y.allergen %}</td>
-           <td>{% print y.amount %}</td>
+           <td style="padding:0 15px 0 15px;">{% print y.name %}</td>
+           <td style="padding:0 15px 0 15px;">{% print y.amount %}</td>
            </tr>
         {% endfor %}
         </tr></table>
@@ -52,8 +55,8 @@
         <table style="padding:20px">
         {% for y in recipe.directions %}
         <tr>
-            <td>{% print y.number %}</td>
-            <td>{% print y.text %}</td>
+            <td style="padding:10px 15px 0 15px;">{% print y.number %}</td>
+            <td style="padding:10px 15px 0 15px;">{% print y.text %}</td>
            </tr>
         {% endfor %}
         </table>
