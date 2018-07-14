@@ -122,11 +122,14 @@ def searchbycourse():
 def recipe():
     id = request.args.get('id')
     conn = engine.connect() 
+    
     s = select([recipes]).where(recipes.c.id == id)
     result = conn.execute(s)
     recipe = ""
     author = ""
     for row in result:
+        stmt = recipes.update().values(views=(row.views + 1)).where(recipes.c.id == id)
+        conn.execute(stmt)
         sx = select([users]).where(users.c.id == row.user_id)
         resx = conn.execute(sx)
         for _rowx in resx:
@@ -152,6 +155,10 @@ def recipe():
             dirs.append(dir)
         
         recipe = Recipe(id, row.name, row.country, row.course, row.views, row.user_id, ings, dirs)
+        
+        
+
+        
     
     return render_template('recipe.html', recipe=recipe, author=author)
     
@@ -179,7 +186,7 @@ def ingredientstats():
                 for i in ings:
                    
                     if i['ingredient'].lower() == _row2.name.lower():
-                        print("Ing " + i['ingredient'].lower() + " " + _row2.name.lower())
+                        print("Ing " + i['ingredient'].lower() + " " + _row2.allergen.lower())
                         i['amount'] = i['amount'] + 1
                         found = 1
                         break
@@ -188,7 +195,7 @@ def ingredientstats():
                         
                 if (found == 0):
                     d = {}
-                    d['ingredient'] = _row2.name
+                    d['ingredient'] = _row2.allergen
                     d['amount'] = 1;
                     ings.append(d)
                 
