@@ -12,7 +12,7 @@
 <script>
 
  function addIngredient() {
-     
+            removeRemove();
             var id = document.getElementById("ingredient");
             var aid = document.getElementById("allergen");
             var tid = document.getElementById("ingredients");
@@ -24,6 +24,7 @@
             id.value = '';
             aid.value = '';
             amid.value = '';
+            addRemove();
         }
         
   
@@ -294,8 +295,75 @@ ed.innerHTML="<p style=\"color:red\">You can edit by deleting the entry with the
 addIngredientForm();
 addDirectionForm();
 
+var eb = document.getElementById("editbutton");
+eb.disabled = true;
+
+var sb = document.getElementById("savebutton");
+sb.disabled = false;
+
 }
+
+function saveAll()
+{
+   
     
+    var eb = document.getElementById("editbutton");
+    eb.disabled = false;
+
+    var sb = document.getElementById("savebutton");
+    sb.disabled = true;
+    
+    removeRemove();
+    var iform = document.getElementById("ingredientform");
+    iform.innerHTML = "";
+    iform = document.getElementById("directionform");
+    iform.innerHTML = "";
+    
+    var dirnum = 1;
+    var dirlist = [];
+        
+  var table = document.getElementById('directions');
+   
+   rows = table.rows;
+   for (var i = 0; i < rows.length; i++) {
+       var dirobj = new Object();
+       dirobj.direction = rows[i].cells[1].innerHTML;
+       dirlist = dirlist.concat(dirobj);
+   }
+   
+   
+   var ingnum = 1;
+       var ingrlist = [];
+   table = document.getElementById('ingredients');
+   
+   rows = table.rows;
+   for (var i = 0; i < rows.length; i++) {
+     
+         var ingobj = new Object();
+          ingobj.ingredient = rows[i].cells[0].innerHTML;
+            ingobj.allergen = rows[i].cells[1].innerHTML;
+            ingobj.amount = rows[i].cells[2].innerHTML;
+          ingrlist  = ingrlist.concat(ingobj);
+          
+   }
+   var ingrObj = new Object();
+   
+            ingrObj.name = "{% print recipe.name %}";
+            ingrObj.country = "{% print recipe.country %}";
+            ingrObj.course= "{% print recipe.course %}";
+            ingrObj.author= "{% print author %}";
+            ingrObj.views = "{% print recipe.views %}";
+            ingrObj.id = "{% print recipe.id %}";
+            ingrObj.ingredients = ingrlist;
+            ingrObj.directions = dirlist;
+             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", "/jsonupdaterecipe");
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            xmlhttp.send(JSON.stringify(ingrObj));
+   
+    
+
+}
     
 </script>
     </head>
@@ -329,13 +397,14 @@ addDirectionForm();
       <br><br><br>
     <div style="padding:20px">
         <br>
-        <button type="button" onclick="makeEditable()">Edit</button>
-        <button type="button" onclick="saveAll()" disabled>Save</button>
+        <button type="button" id="editbutton" onclick="makeEditable()">Edit</button>
+        <button type="button" id="savebutton" onclick="saveAll()" disabled>Save</button>
         <br><br>
         <div id="editing"></div>
         <br>
         <h4>Recipe name: {% print recipe.name %}</h4>
         <h5>Course: {% print recipe.course %}</h5>
+        <h5>Country: {% print recipe.country %}</h5>
         <h5>Author: {% print author %}</h5>
         <h5>Views: {% print recipe.views %}</h5>
         <h5> Ingredient List:</h5>
@@ -345,6 +414,7 @@ addDirectionForm();
         <tr>
            <td style="padding:0 15px 0 15px;">{% print y.name %}</td>
            <td style="padding:0 15px 0 15px;">{% print y.amount %}</td>
+           <td style="padding:0 15px 0 15px;">{% print y.allergen %}</td>
            </tr>
         {% endfor %}
         </table>

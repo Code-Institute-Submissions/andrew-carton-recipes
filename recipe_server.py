@@ -9,7 +9,7 @@ from recipemin import *
 import os, json
 
 app = Flask(__name__)
-engine = create_engine('sqlite:///recipes.db', echo=True)
+engine = create_engine('sqlite:///recipes.db', echo=False)
 
 @app.route('/')
 def home():
@@ -296,7 +296,64 @@ def list_recipes():
         rs.append(recipe)
     
     return render_template('listrecipes.html', recipes=rs)
+
+def deleteRecipeIngredientsAndDirections(id):
     
+    s = select([recipes]).where(recipes.c.id == id)
+    conn = engine.connect() 
+    result = conn.execute(s)
+    
+    for row in result:
+        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        res = conn.execute(select_st)
+
+        for _row in res:
+            x = ingredients.delete(ingredients.c.id==_row.recipe_id)
+            y = conn.execute(x)
+
+    
+        
+        x = directions_list.delete(directions_list.c.recipe_id==row.id)
+        y = conn.execute(x)
+        
+        x = ingredients_list.delete(ingredients_list.c.recipe_id==row.id)
+        y = conn.execute(x)
+        
+        
+        
+    
+@app.route('/jsonupdaterecipe', methods = ['POST'])
+def jsonupdaterecipe():
+    content = request.get_json()
+    conn = engine.connect()
+    id = 1
+    s = select([users]).where(users.c.name == content['author'])
+    result = conn.execute(s)
+    id = result.fetchone().id;
+    
+    deleteRecipeIngredientsAndDirections(int(content['id']))
+   
+    s = select([recipes]).where(recipes.c.id == int(content['id']))
+    
+    result = conn.execute(s)
+    one_row = result.fetchone()
+    num = int(0);
+    for i in content['ingredients']:
+        ins = ingredients.insert().values(name=i['ingredient'], allergen=i['allergen'])
+        res = conn.execute(ins)
+        ingredientpkey = res.inserted_primary_key
+        ins = ingredients_list.insert().values(recipe_id=one_row.id, ingredient_id=ingredientpkey[0], quantity=i['amount'])
+        res = conn.execute(ins)
+    
+    
+    for i in content['directions']:
+        ins = directions_list.insert().values(recipe_id=one_row.id, text=i['direction'], number=num)
+        res = conn.execute(ins)
+        num = num + 1
+        
+        
+    return 'Thank you'
+
 
 @app.route('/jsoninsertrecipe', methods = ['POST'])
 def jsoninsertrecipe():
@@ -305,8 +362,7 @@ def jsoninsertrecipe():
     id = 1
     s = select([users]).where(users.c.name == content['author'])
     result = conn.execute(s)
-    for row in result:
-        id = row.id;
+    id = result.fetchone().id;
     
     conn = engine.connect() 
     ins = recipes.insert().values(name=content['name'], country=content['country'], course=content['course'], views=int(0), user_id=id)
