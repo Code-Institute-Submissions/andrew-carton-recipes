@@ -2,9 +2,6 @@ class Ingredient(object):
     name = ""
     allergen = ""
     amount = ""
-    
-
-    # The class "constructor" - It's actually an initializer 
     def __init__(self, name, allergen, amount):
         self.name = name
         self.allergen = allergen

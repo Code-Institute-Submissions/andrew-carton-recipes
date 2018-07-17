@@ -53,7 +53,7 @@
             ingrObj.directions = dirlist;
             
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-            xmlhttp.open("POST", "/jsoninsertrecipe");
+            xmlhttp.open("POST", "/insertrecipe");
             xmlhttp.setRequestHeader("Content-Type", "application/json");
             xmlhttp.send(JSON.stringify(ingrObj));
   

@@ -351,13 +351,13 @@ function saveAll()
             ingrObj.name = "{% print recipe.name %}";
             ingrObj.country = "{% print recipe.country %}";
             ingrObj.course= "{% print recipe.course %}";
-            ingrObj.author= "{% print author %}";
+            ingrObj.author= "{% print recipe.author %}";
             ingrObj.views = "{% print recipe.views %}";
             ingrObj.id = "{% print recipe.id %}";
             ingrObj.ingredients = ingrlist;
             ingrObj.directions = dirlist;
              var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-            xmlhttp.open("POST", "/jsonupdaterecipe");
+            xmlhttp.open("POST", "/updaterecipe");
             xmlhttp.setRequestHeader("Content-Type", "application/json");
             xmlhttp.send(JSON.stringify(ingrObj));
    
@@ -405,7 +405,7 @@ function saveAll()
         <h4>Recipe name: {% print recipe.name %}</h4>
         <h5>Course: {% print recipe.course %}</h5>
         <h5>Country: {% print recipe.country %}</h5>
-        <h5>Author: {% print author %}</h5>
+        <h5>Author: {% print recipe.author %}</h5>
         <h5>Views: {% print recipe.views %}</h5>
         <h5> Ingredient List:</h5>
         <table class="ingredients" id="ingredients" style="padding:20px">
