@@ -8,7 +8,6 @@ class Recipe(object):
     directions = []
     id = int(0)
 
-    # The class "constructor" - It's actually an initializer 
     def __init__(self, id, name, country, course, views, author, ingredients, directions):
         self.id = id
         self.name = name
@@ -18,9 +17,3 @@ class Recipe(object):
         self.author = author
         self.ingredients = ingredients
         self.directions = directions
-
-def make_recipe(id, name, country, views, author, ingredients, directions):
-    recipe = Recipe(id, name, country, views, author, ingredients, directions)
-    return recipe
-    
-    

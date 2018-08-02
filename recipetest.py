@@ -27,7 +27,7 @@ course = "Breakfast"
 # Each ingredient has a name, id and allergen
 
 ingreds = []
-ingredient1 = {}
+ingredient1 = dict()
 ingredient1['ingredient'] = 'flour'
 ingredient1['amount'] = '200g'
 ingredient1['allergen'] = 'wheat'
@@ -44,10 +44,10 @@ ingredient3['allergen'] = 'dairy'
 ingreds.append(ingredient3)    
 
 directions = []
-direction1 = {}
+direction1 = dict()
 direction1['direction'] = "Sift the flour and salt into a mixing bowl and make a well in the centre. Crack the egg into the well; add the melted butter or oil and half the milk. Gradually draw the flour into the liquid by stirring all the time with a wooden spoon until all the flour has been incorporated and then beat well to make a smooth batter. Stir in the remaining milk. Alternatively, beat all the ingredients together for 1 minute in a blender or food processor. Leave to stand for about 30 minutes, stir again before using."
 directions.append(direction1)
-direction2 = {}
+direction2 = dict()
 direction2['direction'] = "To make the pancakes, heat a small heavy-based frying until very hot and then turn the heat down to medium. Lightly grease with oil and then ladle in enough batter to coat the base of the pan thinly (about 2 tablsp.), tilting the pan so the mixture spreads evenly. Cook over a moderate heat for 1-2 minutes or until the batter looks dry on the top and begins to brown at the edges. Flip the pancake over with a palette knife or fish slice and cook the second side."
 directions.append(direction2)
 
@@ -72,7 +72,7 @@ test_are_equal(len(ingrds) == 3, True)
 # Find flour
 ingr = ""
 for i in ingrds:
-    if (i.name == 'flour'):
+    if i.name == 'flour':
         ingr = i
         break
 
@@ -84,7 +84,7 @@ test_are_equal(i.allergen == "wheat", True)
 # Find egg
 ingr = ""
 for i in ingrds:
-    if (i.name == 'egg'):
+    if i.name == 'egg':
         ingr = i
         break
 
@@ -96,7 +96,7 @@ test_are_equal(i.allergen == "egg", True)
 # Find milk
 ingr = ""
 for i in ingrds:
-    if (i.name == 'milk'):
+    if i.name == 'milk':
         ingr = i
         break
 
