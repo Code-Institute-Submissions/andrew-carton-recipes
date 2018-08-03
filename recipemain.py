@@ -11,80 +11,67 @@ import json
 app = Flask(__name__)
 engine = create_engine('sqlite:///recipes.db', echo=False)
 
+
 # add a user with a password into the database
 # if user exists already, return False
-def user_register(uname, password):
-    connection = engine.connect() 
+def user_register(uname, password, connection):
     s = select([users]).where(users.c.name == uname)
     result = connection.execute(s)
     rows = result.fetchall()
     amount = len(rows)
-    connection.close()
     if amount > 0:
         return False
     else:
         connection = engine.connect() 
         ins = users.insert().values(name=uname, password=password)
         res = connection.execute(ins)
-        connection.close()
         return True
 
 
 # authenticate a user against a password
 # return False if failed
-def user_authenticate(uname, password):
-    connection = engine.connect() 
+def user_authenticate(uname, password, connection):
     s = select([users]).where((users.c.name == uname) & (users.c.password == password))
     result = connection.execute(s)
     rows = result.fetchall()
     amount = len(rows)
-    connection.close()
     if amount > 0:
         return True
     return False
 
 
 # delete a user
-def user_delete(uname):
-    connection = engine.connect()
+def user_delete(uname, connection):
     res = users.delete(users.c.name == uname)
     connection.execute(res)
-    connection.close()
 
 
 # return amount of users
-def user_count():
-    connection = engine.connect()
+def user_count(connection):
     res = select([users])
     result = connection.execute(res)
     rows = result.fetchall()
-    connection.close()
     return len(rows)
 
 
 # return amount of recipes
-def recipe_count():
-    connection = engine.connect()
+def recipe_count(connection):
     res = select([recipes])
     result = connection.execute(res)
     rows = result.fetchall()
-    connection.close()
     return len(rows)
 
 
 # return amount of ingredients
-def ingredient_count():
-    connection = engine.connect()
+def ingredient_count(connection):
     res = select([ingredients])
     result = connection.execute(res)
     rows = result.fetchall()
-    connection.close()
     return len(rows)
 
 
 # delete contents of database
-def db_delete():
-    connection = engine.connect()
+def db_delete(connection):
     res = select([recipes])
     total = connection.execute(res)
     for x in total:
@@ -95,12 +82,10 @@ def db_delete():
     for x in total:
         y = users.delete().where(users.c.id == x.id)
         connection.execute(y)
-    connection.close()
 
 
 # delete all ingredients associated with a recipe (given an id of recipe)
-def ingredients_delete(recipeid):
-    connection = engine.connect()
+def ingredients_delete(recipeid, connection):
     res = select([ingredients_list]).where(ingredients_list.c.recipe_id == recipeid)
     total = connection.execute(res)
     for x in total:
@@ -108,32 +93,27 @@ def ingredients_delete(recipeid):
         connection.execute(res2)
     y = ingredients_list.delete().where(ingredients_list.c.recipe_id == recipeid)
     connection.execute(y)
-    connection.close()
 
 
 # delete all directions associated with a recipe (given an id of recipe)
-def directions_delete(recipeid):
-    connection = engine.connect()
+def directions_delete(recipeid, connection):
     res = select([directions_list])
     connection.execute(res)
     y = directions_list.delete().where(directions_list.c.recipe_id == recipeid)
     connection.execute(y)
-    connection.close()
 
 
 # deletes a recipe and all it's data from the db
-def recipe_delete(id):
+def recipe_delete(id, connection):
     ingredients_delete(id)
     directions_delete(id)
-    connection = engine.connect()
     res = recipes.delete().where(recipes.c.id == id)
     connection.execute(res)
-    connection.close()
     
 
 # insert an ingredient into a recipe given the recipe id and an ingredient
-def ingredient_insert(recipeid, ingredient):
-    conn = engine.connect()
+def ingredient_insert(recipeid, ingredient, conn):
+
     s = select([recipes]).where(recipes.c.id == recipeid)
     result = conn.execute(s)
     one_row = result.fetchone()
@@ -142,56 +122,48 @@ def ingredient_insert(recipeid, ingredient):
     ingredientpkey = res.inserted_primary_key
     ins = ingredients_list.insert().values(recipe_id=one_row.id, ingredient_id=ingredientpkey[0], quantity=ingredient['amount'])
     res = conn.execute(ins)
-    conn.close()
 
 
 # insert a direction into a recipe given the recipe id and a direction and a number for the direction number
-def direction_insert(recipeid, direction, num):
-    conn = engine.connect()
+def direction_insert(recipeid, direction, num, conn):
     s = select([recipes]).where(recipes.c.id == recipeid)
     result = conn.execute(s)
     one_row = result.fetchone()
     ins = directions_list.insert().values(recipe_id=one_row.id, text=direction['direction'], number=num)
     conn.execute(ins)
-    conn.close()
 
 
 # insert a recipe
-def recipe_insert(name, author, country, course, ingreds, directions):
+def recipe_insert(name, author, country, course, ingreds, directions, connection):
     idx = 1
-    conn = engine.connect()
     s = select([users]).where(users.c.name == author)
-    result = conn.execute(s)
+    result = connection.execute(s)
     
     idx = result.fetchone().id
    
     ins = recipes.insert().values(name=name, country=country, course=course, views=int(0), user_id=idx)
-    res = conn.execute(ins)
+    res = connection.execute(ins)
     recipepkey = res.inserted_primary_key
     num = int(0)
     
     for i in ingreds:
-        ingredient_insert(recipepkey[0], i)
+        ingredient_insert(recipepkey[0], i, connection)
 
     for i in directions:
-        direction_insert(recipepkey[0], i, num)
+        direction_insert(recipepkey[0], i, num, connection)
         num = num + 1
 
-    conn.close()
     return recipepkey[0]
 
 
 # retrieve a recipe (as a Recipe object)
-def recipe_get(idx):
-    conn = engine.connect() 
+def recipe_get(idx, conn):
     selrecipes = select([recipes]).where(recipes.c.id == idx)
     recipesresult = conn.execute(selrecipes)
     
     recipex = ""
     
     for recipesrow in recipesresult:
-        stmt = recipes.update().values(views=(recipesrow.views + 1)).where(recipes.c.id == idx)
-        conn.execute(stmt)
         selusers = select([users]).where(users.c.id == recipesrow.user_id)
         usersresult = conn.execute(selusers)
         author = usersresult.fetchone().name
@@ -214,7 +186,7 @@ def recipe_get(idx):
             dirs.append(dir)
         
         recipex = Recipe(idx, recipesrow.name, recipesrow.country, recipesrow.course, recipesrow.views, author, ings, dirs)
-    conn.close()
+
     return recipex
 
 
@@ -230,7 +202,9 @@ def home():
 def do_admin_register():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
-    success = user_register(POST_USERNAME, POST_PASSWORD)
+    conn = engine.connect()
+    success = user_register(POST_USERNAME, POST_PASSWORD, conn)
+    conn.close()
     if not success:
         return('Name taken <br><a href=\'/\'>Try again</a>')
     else:
@@ -242,7 +216,9 @@ def do_admin_register():
 def do_admin_login():
     POST_USERNAME = str(request.form['username'])
     POST_PASSWORD = str(request.form['password'])
-    success = user_authenticate(POST_USERNAME, POST_PASSWORD)
+    conn = engine.connect()
+    success = user_authenticate(POST_USERNAME, POST_PASSWORD, conn)
+    conn.close()
     if success:
         session['logged_in'] = True
         session['user'] = POST_USERNAME
@@ -254,8 +230,8 @@ def do_admin_login():
 @app.route('/searchexcludeallergen')
 def searchexcludeallergen():
     allergen = request.args.get('allergen');
+    conn = engine.connect()
     s = select([recipes])
-    conn = engine.connect() 
     result = conn.execute(s)
     rs = []
     found = 0
@@ -325,8 +301,16 @@ def searchbycourse():
 
 @app.route('/recipe')
 def recipe():
+    conn = engine.connect()
     idx = request.args.get('id')
-    recipe = recipe_get(idx)
+    recipe = recipe_get(idx, conn)
+    selrecipes = select([recipes]).where(recipes.c.id == idx)
+    recipesresult = conn.execute(selrecipes)
+    for recipesrow in recipesresult:
+        stmt = recipes.update().values(views=(recipesrow.views + 1)).where(recipes.c.id == idx)
+        conn.execute(stmt)
+
+    conn.close()
     return render_template('recipe.html', recipe=recipe)
 
 
@@ -413,7 +397,7 @@ def coursestats():
             else:
                 found = 0
                 
-        if (found == 0):
+        if found == 0:
             d = dict()
             d['course'] = row.course
             d['amount'] = 1;
@@ -441,7 +425,7 @@ def list_recipes():
     result = conn.execute(s)
     rs = []
     for row in result:
-        recipe = recipe_get(row.id)
+        recipe = recipe_get(row.id, conn)
         rs.append(recipe)
 
     conn.close()
@@ -457,15 +441,15 @@ def updaterecipe():
     result = conn.execute(s)
     idx = result.fetchone().id
     
-    ingredients_delete(content['id'])
-    directions_delete(content['id'])
+    ingredients_delete(content['id'], conn)
+    directions_delete(content['id'], conn)
     
     num = int(0)
     for i in content['ingredients']:
-        ingredient_insert(content['id'], i)
+        ingredient_insert(content['id'], i, conn)
     
     for i in content['directions']:
-        direction_insert(content['id'], i, num)
+        direction_insert(content['id'], i, num, conn)
         num = num + 1
 
     conn.close()
@@ -474,8 +458,10 @@ def updaterecipe():
 
 @app.route('/insertrecipe', methods=['POST'])
 def insertrecipe():
+    conn = engine.connect()
     content = request.get_json()
-    recipe_insert(content['name'], content['author'], content['country'], content['course'], content['ingredients'], content['directions'])
+    recipe_insert(content['name'], content['author'], content['country'], content['course'], content['ingredients'], content['directions'], conn)
+    conn.close()
     return 'Thank you'
 
 
