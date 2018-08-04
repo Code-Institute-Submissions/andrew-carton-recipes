@@ -17,11 +17,25 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
                 var recipesdiv = document.getElementById("recipes");
-                var str = "<ul>";
+                var str = '<div class="row">'
+
+
                 for (var i = 0; i < data.length; i++) {
-                    str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    str += '<div class="col-sm-4">';
+                    str += '<div class="card" style="width: 18rem;">';
+                    str += '<img class="card-img-top" src="static/';
+                    str += '' + data[i].image + '" height="20%" width="20%">';
+                    str += '<div class="card-body">';
+                    str += ' <h5 class="card-title">' + data[i].name + '</h5>';
+                    str += '<p class="card-text">A ';
+                    str += '' + data[i].course + ' dish from ' + data[i].country + ' </p>';
+                    str += ' <a href="recipe?id=' + data[i].id + ' class="btn btn-primary">View Recipe</a>';
+                    str += '</div>';
+                    str += '</div>';
+                    str += '</div>';
+
                 }
-                str += "</ul>";
+                str += "</div>";
                 recipesdiv.innerHTML = str;
             }
         };
@@ -40,11 +54,27 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
                 var recipesdiv = document.getElementById("recipes");
-                var str = "<ul>";
+
+                var str = '<div class="row">'
+
+
                 for (var i = 0; i < data.length; i++) {
-                    str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    str += '<div class="col-sm-4">';
+                    str += '<div class="card" style="width: 18rem;">';
+                    str += '<img class="card-img-top" src="static/';
+                    str += '' + data[i].image + '" height="20%" width="20%">';
+                    str += '<div class="card-body">';
+                    str += ' <h5 class="card-title">' + data[i].name + '</h5>';
+                    str += '<p class="card-text">A ';
+                    str += '' + data[i].course + ' dish from ' + data[i].country + ' </p>';
+                    str += ' <a href="recipe?id=' + data[i].id + ' class="btn btn-primary">View Recipe</a>';
+                    str += '</div>';
+                    str += '</div>';
+                    str += '</div>';
+
                 }
-                str += "</ul>";
+                str += "</div>";
+
                 recipesdiv.innerHTML = str;
             }
         };
@@ -63,11 +93,25 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText);
                 var recipesdiv = document.getElementById("recipes");
-                var str = "<ul>";
+                var str = '<div class="row">'
+
+
                 for (var i = 0; i < data.length; i++) {
-                    str += '<li><a href="recipe?id=' + data[i].id + '">' + data[i].name + ' </a></li>';
+                    str += '<div class="col-sm-4">';
+                    str += '<div class="card" style="width: 18rem;">';
+                    str += '<img class="card-img-top" src="static/';
+                    str += '' + data[i].image + '" height="20%" width="20%">';
+                    str += '<div class="card-body">';
+                    str += ' <h5 class="card-title">' + data[i].name + '</h5>';
+                    str += '<p class="card-text">A ';
+                    str += '' + data[i].course + ' dish from ' + data[i].country + ' </p>';
+                    str += ' <a href="recipe?id=' + data[i].id + ' class="btn btn-primary">View Recipe</a>';
+                    str += '</div>';
+                    str += '</div>';
+                    str += '</div>';
+
                 }
-                str += "</ul>";
+                str += "</div>";
                 recipesdiv.innerHTML = str;
             }
         };
@@ -132,15 +176,25 @@
     <br>
     <h4>Recipe List</h4>
     <div class="recipes" id="recipes" style="padding:20px">
-        <ul>
+        <div class="row">
+
             {% for x in recipes %}
-            <li><a href="recipe?id={% print x.id %}">{% print x.name %} </a></li>
+            <div class="col-sm-4">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="static/{% print x.image %}" height="20%" width="20%">
+                    <div class="card-body">
+                        <h5 class="card-title">{% print x.name %}</h5>
+                        <p class="card-text">A {% print x.course %} dish from {% print x.country %}</p>
+                        <a href="recipe?id={% print x.id %}" class="btn btn-primary">View Recipe</a>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </ul>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 

@@ -22,7 +22,7 @@ def user_register(uname, password, connection):
     if amount > 0:
         return False
     else:
-        connection = engine.connect() 
+        connection = engine.connect()
         ins = users.insert().values(name=uname, password=password)
         connection.execute(ins)
         return True
@@ -31,7 +31,8 @@ def user_register(uname, password, connection):
 # authenticate a user against a password
 # return False if failed
 def user_authenticate(uname, password, connection):
-    s = select([users]).where((users.c.name == uname) & (users.c.password == password))
+    s = select([users]).where((users.c.name == uname)
+                              & (users.c.password == password))
     result = connection.execute(s)
     rows = result.fetchall()
     amount = len(rows)
@@ -76,7 +77,7 @@ def db_delete(connection):
     total = connection.execute(res)
     for x in total:
         recipe_delete(x.id, connection)
-        
+
     res = select([users])
     total = connection.execute(res)
     for x in total:
@@ -86,7 +87,8 @@ def db_delete(connection):
 
 # delete all ingredients associated with a recipe (given an id of recipe)
 def ingredients_delete(recipeid, connection):
-    res = select([ingredients_list]).where(ingredients_list.c.recipe_id == recipeid)
+    res = select([ingredients_list]).where(
+        ingredients_list.c.recipe_id == recipeid)
     total = connection.execute(res)
     for x in total:
         res2 = ingredients.delete().where(ingredients.c.id == x.ingredient_id)
@@ -109,7 +111,7 @@ def recipe_delete(id, connection):
     directions_delete(id, connection)
     res = recipes.delete().where(recipes.c.id == id)
     connection.execute(res)
-    
+
 
 # insert an ingredient into a recipe given the recipe id and an ingredient
 def ingredient_insert(recipeid, ingredient, conn):
@@ -117,10 +119,12 @@ def ingredient_insert(recipeid, ingredient, conn):
     s = select([recipes]).where(recipes.c.id == recipeid)
     result = conn.execute(s)
     one_row = result.fetchone()
-    ins = ingredients.insert().values(name=ingredient['ingredient'], allergen=ingredient['allergen'])
+    ins = ingredients.insert().values(
+        name=ingredient['ingredient'], allergen=ingredient['allergen'])
     res = conn.execute(ins)
     ingredientpkey = res.inserted_primary_key
-    ins = ingredients_list.insert().values(recipe_id=one_row.id, ingredient_id=ingredientpkey[0], quantity=ingredient['amount'])
+    ins = ingredients_list.insert().values(recipe_id=one_row.id,
+                                           ingredient_id=ingredientpkey[0], quantity=ingredient['amount'])
     res = conn.execute(ins)
 
 
@@ -129,7 +133,8 @@ def direction_insert(recipeid, direction, num, conn):
     s = select([recipes]).where(recipes.c.id == recipeid)
     result = conn.execute(s)
     one_row = result.fetchone()
-    ins = directions_list.insert().values(recipe_id=one_row.id, text=direction['direction'], number=num)
+    ins = directions_list.insert().values(
+        recipe_id=one_row.id, text=direction['direction'], number=num)
     conn.execute(ins)
 
 
@@ -138,16 +143,17 @@ def recipe_insert(name, author, country, course, ingreds, directions, image, con
     idx = 1
     s = select([users]).where(users.c.name == author)
     result = connection.execute(s)
-    
+
     idx = result.fetchone().id
     if (image == ""):
         image = "default.png"
 
-    ins = recipes.insert().values(name=name, country=country, course=course, image=image, views=int(0), user_id=idx)
+    ins = recipes.insert().values(name=name, country=country, course=course,
+                                  image=image, views=int(0), user_id=idx)
     res = connection.execute(ins)
     recipepkey = res.inserted_primary_key
     num = int(0)
-    
+
     for i in ingreds:
         ingredient_insert(recipepkey[0], i, connection)
 
@@ -162,32 +168,37 @@ def recipe_insert(name, author, country, course, ingreds, directions, image, con
 def recipe_get(idx, conn):
     selrecipes = select([recipes]).where(recipes.c.id == idx)
     recipesresult = conn.execute(selrecipes)
-    
+
     recipex = ""
-    
+
     for recipesrow in recipesresult:
         selusers = select([users]).where(users.c.id == recipesrow.user_id)
         usersresult = conn.execute(selusers)
         author = usersresult.fetchone().name
-        selingrslst = select([ingredients_list]).where(ingredients_list.c.recipe_id == idx)
+        selingrslst = select([ingredients_list]).where(
+            ingredients_list.c.recipe_id == idx)
         ingredslstres = conn.execute(selingrslst)
-            
+
         ings = []
         for ingredslstrow in ingredslstres:
-            selingrds = select([ingredients]).where(ingredients.c.id == ingredslstrow.ingredient_id)
+            selingrds = select([ingredients]).where(
+                ingredients.c.id == ingredslstrow.ingredient_id)
             ingrdsresult = conn.execute(selingrds)
             for ingredsrow in ingrdsresult:
-                ing = Ingredient(ingredsrow.name, ingredsrow.allergen, ingredslstrow.quantity)
+                ing = Ingredient(
+                    ingredsrow.name, ingredsrow.allergen, ingredslstrow.quantity)
                 ings.append(ing)
 
-        seldirs = select([directions_list]).where(directions_list.c.recipe_id == idx)
+        seldirs = select([directions_list]).where(
+            directions_list.c.recipe_id == idx)
         dirsresult = conn.execute(seldirs)
         dirs = []
         for dirsrow in dirsresult:
             dir = Direction(dirsrow.number, dirsrow.text)
             dirs.append(dir)
-        
-        recipex = Recipe(idx, recipesrow.name, recipesrow.country, recipesrow.course, recipesrow.views, author, ings, recipesrow.image, dirs)
+
+        recipex = Recipe(idx, recipesrow.name, recipesrow.country, recipesrow.course,
+                         recipesrow.views, author, ings, recipesrow.image, dirs)
 
     return recipex
 
@@ -238,24 +249,29 @@ def searchexcludeallergen():
     rs = []
     found = 0
     for row in result:
-        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        select_st = select([ingredients_list]).where(
+            ingredients_list.c.recipe_id == row.id)
         res = conn.execute(select_st)
-        
+
         for _row in res:
-            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            select_st2 = select([ingredients]).where(
+                ingredients.c.id == _row.ingredient_id)
             res2 = conn.execute(select_st2)
             for _row2 in res2:
                 if allergen.lower() == _row2.allergen.lower():
                     found = 1
-        
+
         if found == 0:
             r = dict()
             r['id'] = row.id
             r['name'] = row.name
+            r['country'] = row.country
+            r['course'] = row.course
+            r['image'] = row.image
             rs.append(r)
         else:
             found = 0
-            
+
     conn.close()
     return json.dumps(rs)
 
@@ -264,38 +280,47 @@ def searchexcludeallergen():
 def searchbyingredient():
     ingredient = request.args.get('ingredient')
     s = select([recipes])
-    conn = engine.connect() 
+    conn = engine.connect()
     result = conn.execute(s)
     rs = []
     for row in result:
-        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        select_st = select([ingredients_list]).where(
+            ingredients_list.c.recipe_id == row.id)
         res = conn.execute(select_st)
-        
+
         for _row in res:
-            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            select_st2 = select([ingredients]).where(
+                ingredients.c.id == _row.ingredient_id)
             res2 = conn.execute(select_st2)
             for _row2 in res2:
                 if ingredient.lower() == _row2.name.lower():
                     r = dict()
                     r['id'] = row.id
                     r['name'] = row.name
+                    r['country'] = row.country
+                    r['course'] = row.course
+                    r['image'] = row.image
                     rs.append(r)
     conn.close()
-    return json.dumps(rs)    
+    return json.dumps(rs)
 
 
 @app.route('/searchbycourse')
 def searchbycourse():
     course = request.args.get('course')
-    conn = engine.connect() 
-    s = select([recipes]).where(func.lower(recipes.c.course) == func.lower(course))
-    
+    conn = engine.connect()
+    s = select([recipes]).where(func.lower(
+        recipes.c.course) == func.lower(course))
+
     rlist = []
     result = conn.execute(s)
     for row in result:
         r = dict()
         r['id'] = row.id
         r['name'] = row.name
+        r['country'] = row.country
+        r['course'] = row.course
+        r['image'] = row.image
         rlist.append(r)
     conn.close()
     return json.dumps(rlist)
@@ -309,7 +334,8 @@ def recipe():
     selrecipes = select([recipes]).where(recipes.c.id == idx)
     recipesresult = conn.execute(selrecipes)
     for recipesrow in recipesresult:
-        stmt = recipes.update().values(views=(recipesrow.views + 1)).where(recipes.c.id == idx)
+        stmt = recipes.update().values(
+            views=(recipesrow.views + 1)).where(recipes.c.id == idx)
         conn.execute(stmt)
 
     conn.close()
@@ -323,46 +349,48 @@ def insert_recipe():
 
 @app.route('/ingredientstats')
 def ingredientstats():
-    conn = engine.connect() 
+    conn = engine.connect()
     s = select([recipes])
     result = conn.execute(s)
-    
+
     ings = []
     for row in result:
-        select_st = select([ingredients_list]).where(ingredients_list.c.recipe_id == row.id)
+        select_st = select([ingredients_list]).where(
+            ingredients_list.c.recipe_id == row.id)
         res = conn.execute(select_st)
 
         for _row in res:
-            select_st2 = select([ingredients]).where(ingredients.c.id == _row.ingredient_id)
+            select_st2 = select([ingredients]).where(
+                ingredients.c.id == _row.ingredient_id)
             res2 = conn.execute(select_st2)
             for _row2 in res2:
                 found = 0
                 for i in ings:
-                   
+
                     if i['ingredient'].lower() == _row2.allergen.lower():
                         i['amount'] = i['amount'] + 1
                         found = 1
                         break
                     else:
                         found = 0
-                        
+
                 if found == 0 and _row2.allergen != '':
                     d = dict()
                     d['ingredient'] = _row2.allergen
                     d['amount'] = 1
                     ings.append(d)
-    
+
     conn.close()
     return json.dumps(ings)
 
 
 @app.route('/countrystats')
 def countrystats():
-    conn = engine.connect() 
+    conn = engine.connect()
     s = select([recipes])
     result = conn.execute(s)
     crs = []
-    
+
     for row in result:
         found = 0
         for i in crs:
@@ -372,7 +400,7 @@ def countrystats():
                 break
             else:
                 found = 0
-                
+
         if found == 0:
             d = dict()
             d['country'] = row.country
@@ -385,7 +413,7 @@ def countrystats():
 
 @app.route('/coursestats')
 def coursestats():
-    conn = engine.connect() 
+    conn = engine.connect()
     s = select([recipes])
     result = conn.execute(s)
     crs = []
@@ -399,7 +427,7 @@ def coursestats():
                 break
             else:
                 found = 0
-                
+
         if found == 0:
             d = dict()
             d['course'] = row.course
@@ -424,7 +452,7 @@ def logout():
 @app.route('/listrecipes')
 def list_recipes():
     s = select([recipes])
-    conn = engine.connect() 
+    conn = engine.connect()
     result = conn.execute(s)
     rs = []
     for row in result:
@@ -439,30 +467,32 @@ def list_recipes():
 def updaterecipe():
     content = request.get_json()
     conn = engine.connect()
-    
+
     s = select([users]).where(users.c.name == content['author'])
     result = conn.execute(s)
     idx = result.fetchone().id
-    
+
     ingredients_delete(content['id'], conn)
     directions_delete(content['id'], conn)
-    
+
     num = int(0)
     for i in content['ingredients']:
         ingredient_insert(content['id'], i, conn)
-    
+
     for i in content['directions']:
         direction_insert(content['id'], i, num, conn)
         num = num + 1
-  
+
     s = select([recipes]).where(recipes.c.id == content['id'])
     result = conn.execute(s)
     x = result.fetchone()
     if x:
         idx = x.id
-        stmt = recipes.update().values(course=content['course']).where(recipes.c.id == content['id'])
+        stmt = recipes.update().values(course=content['course']).where(
+            recipes.c.id == content['id'])
         conn.execute(stmt)
-        stmt = recipes.update().values(country=content['country']).where(recipes.c.id == content['id'])
+        stmt = recipes.update().values(country=content['country']).where(
+            recipes.c.id == content['id'])
         conn.execute(stmt)
     conn.close()
     return 'Thank you'
@@ -472,17 +502,27 @@ def updaterecipe():
 def insertrecipe():
     conn = engine.connect()
     content = request.get_json()
-    recipe_insert(content['name'], content['author'], content['country'], content['course'], content['ingredients'], content['directions'], content['image'], conn)
+    recipe_insert(content['name'], content['author'], content['country'], content['course'],
+                  content['ingredients'], content['directions'], content['image'], conn)
     conn.close()
     return 'Thank you'
+
 
 @app.route('/uploadajax', methods=['POST'])
 def uploaded_file():
     file = request.files['file']
     if file:
-            file.save(os.path.join("static", file.filename))
-            
+        file.save(os.path.join("static", file.filename))
+
     return ''
 
-app.secret_key = os.urandom(12)
+@app.route('/deleterecipe', methods=['POST'])
+def delete_recipe():
+    content = request.get_json()
+    conn = engine.connect()
+    recipe_delete(content['id'], conn)
+    conn.close()
+    return ''
 
+
+app.secret_key = os.urandom(12)
