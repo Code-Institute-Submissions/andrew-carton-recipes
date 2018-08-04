@@ -17,27 +17,28 @@ recipes = Table('recipes', metadata,
                 Column('name', String, nullable=False),
                 Column('country', String, nullable=False),
                 Column('course', String, nullable=False),
+                Column('image', String, nullable=False),
                 Column('views', Integer, nullable=False),
                 Column('user_id', None, ForeignKey('users.id'))
 )
 
-ingredients = Table('ingredients', metadata,
+ingredients=Table('ingredients', metadata,
                     Column('id', Integer, primary_key=True),
                     Column('name', String),
                     Column('allergen', String),
 )
 
-ingredients_list = Table('ingredients_list', metadata,
+ingredients_list=Table('ingredients_list', metadata,
                          Column('recipe_id', None, ForeignKey('recipes.id')),
-                         Column('ingredient_id', None, ForeignKey('ingredients.id')),
+                         Column('ingredient_id', None,
+                                ForeignKey('ingredients.id')),
                          Column('quantity', String, nullable=False)
 )
 
-directions_list = Table('directions_list', metadata, 
+directions_list=Table('directions_list', metadata,
                         Column('recipe_id', None, ForeignKey('recipes.id')),
                         Column('text', String, nullable=False),
                         Column('number', Integer, nullable=False)
 )
 
 metadata.create_all(engine)
-

@@ -24,7 +24,7 @@ def user_register(uname, password, connection):
     else:
         connection = engine.connect() 
         ins = users.insert().values(name=uname, password=password)
-        res = connection.execute(ins)
+        connection.execute(ins)
         return True
 
 
@@ -75,7 +75,7 @@ def db_delete(connection):
     res = select([recipes])
     total = connection.execute(res)
     for x in total:
-        recipe_delete(x.id)
+        recipe_delete(x.id, connection)
         
     res = select([users])
     total = connection.execute(res)
@@ -105,8 +105,8 @@ def directions_delete(recipeid, connection):
 
 # deletes a recipe and all it's data from the db
 def recipe_delete(id, connection):
-    ingredients_delete(id)
-    directions_delete(id)
+    ingredients_delete(id, connection)
+    directions_delete(id, connection)
     res = recipes.delete().where(recipes.c.id == id)
     connection.execute(res)
     
@@ -134,14 +134,16 @@ def direction_insert(recipeid, direction, num, conn):
 
 
 # insert a recipe
-def recipe_insert(name, author, country, course, ingreds, directions, connection):
+def recipe_insert(name, author, country, course, ingreds, directions, image, connection):
     idx = 1
     s = select([users]).where(users.c.name == author)
     result = connection.execute(s)
     
     idx = result.fetchone().id
-   
-    ins = recipes.insert().values(name=name, country=country, course=course, views=int(0), user_id=idx)
+    if (image == ""):
+        image = "default.png"
+
+    ins = recipes.insert().values(name=name, country=country, course=course, image=image, views=int(0), user_id=idx)
     res = connection.execute(ins)
     recipepkey = res.inserted_primary_key
     num = int(0)
@@ -185,7 +187,7 @@ def recipe_get(idx, conn):
             dir = Direction(dirsrow.number, dirsrow.text)
             dirs.append(dir)
         
-        recipex = Recipe(idx, recipesrow.name, recipesrow.country, recipesrow.course, recipesrow.views, author, ings, dirs)
+        recipex = Recipe(idx, recipesrow.name, recipesrow.country, recipesrow.course, recipesrow.views, author, ings, recipesrow.image, dirs)
 
     return recipex
 
@@ -229,7 +231,7 @@ def do_admin_login():
 
 @app.route('/searchexcludeallergen')
 def searchexcludeallergen():
-    allergen = request.args.get('allergen');
+    allergen = request.args.get('allergen')
     conn = engine.connect()
     s = select([recipes])
     result = conn.execute(s)
@@ -260,7 +262,7 @@ def searchexcludeallergen():
 
 @app.route('/searchbyingredient')
 def searchbyingredient():
-    ingredient = request.args.get('ingredient');
+    ingredient = request.args.get('ingredient')
     s = select([recipes])
     conn = engine.connect() 
     result = conn.execute(s)
@@ -284,7 +286,7 @@ def searchbyingredient():
 
 @app.route('/searchbycourse')
 def searchbycourse():
-    course = request.args.get('course');
+    course = request.args.get('course')
     conn = engine.connect() 
     s = select([recipes]).where(func.lower(recipes.c.course) == func.lower(course))
     
@@ -296,7 +298,7 @@ def searchbycourse():
         r['name'] = row.name
         rlist.append(r)
     conn.close()
-    return json.dumps(rlist);
+    return json.dumps(rlist)
 
 
 @app.route('/recipe')
@@ -347,7 +349,7 @@ def ingredientstats():
                 if found == 0 and _row2.allergen != '':
                     d = dict()
                     d['ingredient'] = _row2.allergen
-                    d['amount'] = 1;
+                    d['amount'] = 1
                     ings.append(d)
     conn.close()
     return json.dumps(ings)
@@ -373,7 +375,7 @@ def countrystats():
         if found == 0:
             d = dict()
             d['country'] = row.country
-            d['amount'] = 1;
+            d['amount'] = 1
             crs.append(d)
 
     conn.close()
@@ -400,7 +402,7 @@ def coursestats():
         if found == 0:
             d = dict()
             d['course'] = row.course
-            d['amount'] = 1;
+            d['amount'] = 1
             crs.append(d)
 
     conn.close()
@@ -436,7 +438,7 @@ def list_recipes():
 def updaterecipe():
     content = request.get_json()
     conn = engine.connect()
-    idx = 1
+    
     s = select([users]).where(users.c.name == content['author'])
     result = conn.execute(s)
     idx = result.fetchone().id
@@ -460,10 +462,17 @@ def updaterecipe():
 def insertrecipe():
     conn = engine.connect()
     content = request.get_json()
-    recipe_insert(content['name'], content['author'], content['country'], content['course'], content['ingredients'], content['directions'], conn)
+    recipe_insert(content['name'], content['author'], content['country'], content['course'], content['ingredients'], content['directions'], content['image'], conn)
     conn.close()
     return 'Thank you'
 
+@app.route('/uploadajax', methods=['POST'])
+def uploaded_file():
+    file = request.files['file']
+    if file:
+            file.save(os.path.join("static", file.filename))
+            
+    return ''
 
 app.secret_key = os.urandom(12)
 

@@ -1,14 +1,6 @@
-class Recipe(object):
-    name = ""
-    country = ""
-    course = ""
-    author = ""
-    views = int(0)
-    ingredients = []
-    directions = []
-    id = int(0)
+class Recipe():
 
-    def __init__(self, id, name, country, course, views, author, ingredients, directions):
+    def __init__(self, id, name, country, course, views, author, ingredients, image, directions):
         self.id = id
         self.name = name
         self.country = country
@@ -17,3 +9,4 @@ class Recipe(object):
         self.author = author
         self.ingredients = ingredients
         self.directions = directions
+        self.image = image

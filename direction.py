@@ -1,6 +1,4 @@
-class Direction(object):
-    number = int(0)
-    text = ""
+class Direction():
 
     def __init__(self, number, text):
         self.number = number

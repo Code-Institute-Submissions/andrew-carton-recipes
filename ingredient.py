@@ -1,7 +1,4 @@
-class Ingredient(object):
-    name = ""
-    allergen = ""
-    amount = ""
+class Ingredient():
 
     def __init__(self, name, allergen, amount):
         self.name = name

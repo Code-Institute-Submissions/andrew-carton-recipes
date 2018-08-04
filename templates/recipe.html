@@ -350,6 +350,7 @@
             ingrObj.author = "{% print recipe.author %}";
             ingrObj.views = "{% print recipe.views %}";
             ingrObj.id = "{% print recipe.id %}";
+            ingrObj.image = "{% print recipe.image %};"
             ingrObj.ingredients = ingrlist;
             ingrObj.directions = dirlist;
             var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
@@ -398,6 +399,7 @@
         <div id="editing"></div>
         <br>
         <h4>Recipe name: {% print recipe.name %}</h4>
+        <img src="static/{% print recipe.image %}" />
         <h5>Course: {% print recipe.course %}</h5>
         <h5>Country: {% print recipe.country %}</h5>
         <h5>Author: {% print recipe.author %}</h5>
