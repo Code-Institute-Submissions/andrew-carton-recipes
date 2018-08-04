@@ -339,7 +339,7 @@ def ingredientstats():
                 found = 0
                 for i in ings:
                    
-                    if i['ingredient'].lower() == _row2.name.lower():
+                    if i['ingredient'].lower() == _row2.allergen.lower():
                         i['amount'] = i['amount'] + 1
                         found = 1
                         break
@@ -351,6 +351,7 @@ def ingredientstats():
                     d['ingredient'] = _row2.allergen
                     d['amount'] = 1
                     ings.append(d)
+    
     conn.close()
     return json.dumps(ings)
 
@@ -454,13 +455,15 @@ def updaterecipe():
         direction_insert(content['id'], i, num, conn)
         num = num + 1
   
-    s = select([recipes]).where(recipes.c.name == content['name'])
+    s = select([recipes]).where(recipes.c.id == content['id'])
     result = conn.execute(s)
-    idx = result.fetchone().id
-    stmt = recipes.update().values(course=content['course']).where(recipes.c.id == idx)
-    conn.execute(stmt)
-    stmt = recipes.update().values(country=content['country']).where(recipes.c.id == idx)
-    conn.execute(stmt)
+    x = result.fetchone()
+    if x:
+        idx = x.id
+        stmt = recipes.update().values(course=content['course']).where(recipes.c.id == content['id'])
+        conn.execute(stmt)
+        stmt = recipes.update().values(country=content['country']).where(recipes.c.id == content['id'])
+        conn.execute(stmt)
     conn.close()
     return 'Thank you'
 
