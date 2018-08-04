@@ -235,6 +235,36 @@
             iform.appendChild(f);
         }
 
+        function addCourseForm() {
+            var iform = document.getElementById("courseform");
+            f = document.createElement("form");
+            f.setAttribute("action", "");
+            f.setAttribute("method", "POST");
+
+            i1 = document.createElement("input");
+            i1.type = "text";
+            i1.id = "course"
+            i1.value = "{% print recipe.course %}";
+            f.appendChild(i1);
+
+            iform.appendChild(f);
+        }
+
+        function addCountryForm() {
+            var iform = document.getElementById("countryform");
+            f = document.createElement("form");
+            f.setAttribute("action", "");
+            f.setAttribute("method", "POST");
+
+            i1 = document.createElement("input");
+            i1.type = "text";
+            i1.id = "country"
+            i1.value = "{% print recipe.country %}";
+            f.appendChild(i1);
+
+            iform.appendChild(f);
+        }
+
         function addIngredientForm() {
             var iform = document.getElementById("ingredientform");
             f = document.createElement("form");
@@ -291,6 +321,8 @@
 
             addIngredientForm();
             addDirectionForm();
+            addCourseForm();
+            addCountryForm();
 
             var eb = document.getElementById("editbutton");
             eb.disabled = true;
@@ -345,8 +377,8 @@
             var ingrObj = new Object();
 
             ingrObj.name = "{% print recipe.name %}";
-            ingrObj.country = "{% print recipe.country %}";
-            ingrObj.course = "{% print recipe.course %}";
+            ingrObj.country = document.getElementById("country").value;
+            ingrObj.course = document.getElementById("course").value;
             ingrObj.author = "{% print recipe.author %}";
             ingrObj.views = "{% print recipe.views %}";
             ingrObj.id = "{% print recipe.id %}";
@@ -401,7 +433,9 @@
         <h4>Recipe name: {% print recipe.name %}</h4>
         <img src="static/{% print recipe.image %}" />
         <h5>Course: {% print recipe.course %}</h5>
+        <div id="courseform"></div>
         <h5>Country: {% print recipe.country %}</h5>
+        <div id="countryform"></div>
         <h5>Author: {% print recipe.author %}</h5>
         <h5>Views: {% print recipe.views %}</h5>
         <h5> Ingredient List:</h5>

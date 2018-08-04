@@ -453,7 +453,14 @@ def updaterecipe():
     for i in content['directions']:
         direction_insert(content['id'], i, num, conn)
         num = num + 1
-
+  
+    s = select([recipes]).where(recipes.c.name == content['name'])
+    result = conn.execute(s)
+    idx = result.fetchone().id
+    stmt = recipes.update().values(course=content['course']).where(recipes.c.id == idx)
+    conn.execute(stmt)
+    stmt = recipes.update().values(country=content['country']).where(recipes.c.id == idx)
+    conn.execute(stmt)
     conn.close()
     return 'Thank you'
 
