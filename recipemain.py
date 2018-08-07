@@ -145,7 +145,7 @@ def recipe_insert(name, author, country, course, ingreds, directions, image, con
     result = connection.execute(s)
 
     idx = result.fetchone().id
-    if (image == ""):
+    if image == "":
         image = "default.png"
 
     ins = recipes.insert().values(name=name, country=country, course=course,

@@ -52,7 +52,7 @@ direction2 = dict()
 direction2['direction'] = "To make the pancakes, heat a small heavy-based frying until very hot and then turn the heat down to medium. Lightly grease with oil and then ladle in enough batter to coat the base of the pan thinly (about 2 tablsp.), tilting the pan so the mixture spreads evenly. Cook over a moderate heat for 1-2 minutes or until the batter looks dry on the top and begins to brown at the edges. Flip the pancake over with a palette knife or fish slice and cook the second side."
 directions.append(direction2)
 
-recipeid = recipe_insert(name, author, country, course, ingreds, directions, conn)
+recipeid = recipe_insert(name, author, country, course, ingreds, directions, "", conn)
 
 # Test everything was inserted in correctly
 test_are_equal(user_count(conn) == 1, True)
