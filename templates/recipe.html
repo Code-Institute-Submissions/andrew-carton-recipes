@@ -2,7 +2,8 @@
 
 <head>
     <title>Cookbook App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous" />
 
     <style>
         .column.over {
@@ -91,7 +92,7 @@
 
         function handleDragEnd(e) {
             var cols = document.querySelectorAll('#directions .column');
-            [].forEach.call(cols, function(col) {
+            [].forEach.call(cols, function (col) {
                 col.classList.remove('over');
             });
             reorder();
@@ -158,10 +159,10 @@
                 cell.innerHTML = "x";
 
 
-                cell.addEventListener('mouseover', function(e) {
+                cell.addEventListener('mouseover', function (e) {
                     this.style.cursor = "pointer";
                 }, false);
-                cell.addEventListener('click', function(e) {
+                cell.addEventListener('click', function (e) {
                     var table2 = document.getElementById('directions');
                     rows = table2.rows;
                     for (var i = 0; i < rows.length; i++) {
@@ -189,10 +190,10 @@
                 cell.innerHTML = "x";
 
 
-                cell.addEventListener('mouseover', function(e) {
+                cell.addEventListener('mouseover', function (e) {
                     this.style.cursor = "pointer";
                 }, false);
-                cell.addEventListener('click', function(e) {
+                cell.addEventListener('click', function (e) {
                     var table2 = document.getElementById('ingredients');
                     rows = table2.rows;
                     for (var i = 0; i < rows.length; i++) {
@@ -300,7 +301,7 @@
 
         function addCallbacks() {
             var cols = document.querySelectorAll('#directions .column');
-            [].forEach.call(cols, function(col) {
+            [].forEach.call(cols, function (col) {
 
                 col.addEventListener('dragstart', handleDragStart, false);
                 col.addEventListener('dragenter', handleDragEnter, false);
@@ -350,24 +351,6 @@
         function saveAll() {
 
 
-            var eb = document.getElementById("editbutton");
-            eb.disabled = false;
-
-            var sb = document.getElementById("savebutton");
-            sb.disabled = true;
-
-            removeRemove();
-            var iform = document.getElementById("ingredientform");
-            iform.innerHTML = "";
-            iform = document.getElementById("directionform");
-            iform.innerHTML = "";
-            iform = document.getElementById("courseform");
-            iform.innerHTML = "";
-            iform = document.getElementById("countryform");
-            iform.innerHTML = "";
-            var ed = document.getElementById("editing");
-            ed.innerHTML = "";
-
             var dirnum = 1;
             var dirlist = [];
 
@@ -413,15 +396,36 @@
 
 
 
+            var eb = document.getElementById("editbutton");
+            eb.disabled = false;
+
+            var sb = document.getElementById("savebutton");
+            sb.disabled = true;
+
+            removeRemove();
+            var iform = document.getElementById("ingredientform");
+            iform.innerHTML = "";
+            iform = document.getElementById("directionform");
+            iform.innerHTML = "";
+            iform = document.getElementById("courseform");
+            iform.innerHTML = "";
+            iform = document.getElementById("countryform");
+            iform.innerHTML = "";
+            var ed = document.getElementById("editing");
+            ed.innerHTML = "";
+
+            window.location.href = "/listrecipes";
+
         }
     </script>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -493,9 +497,12 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 
