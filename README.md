@@ -36,3 +36,66 @@ I used a build it yourself testing suite in byotest.py. To build the tests, I st
     a. Follow steps above to login.
     b. Go to the main page when you login and click logout.
     c. This should logout and redirect back to login page again.
+
+4. Testing the Recipe List
+    a. Go to the recipe list page
+    b. The recipes should be listed
+    c. click on a recipe to view it
+    d. The recipe should be viewed
+
+5. Testing the search recipe
+    a. Enter in an item for search by course e.g. main and click submit
+    b. The list should filter depending on the submitted value
+    c. Try the exact same thing with ingredient and exclude allergen
+    d. The list should be filtered simularly
+
+6. Graphs
+    a. Go to the graphs page
+    b. The graphs should display the relevant information reflecting the recipes present
+       from the recipes page
+    
+    a. Add a recipe with an allergen or course
+    b. Check the graph accurately reflects the new data
+
+7. Inserting a recipe
+    a. Make sure you are logged in
+    b. Go to Insert Recipe page
+    c. Add in all the values
+    d. Submit a photo if you like and hit upload
+    e. Submit the recipe
+    f. Go back to recipe list and make sure the recipe is displayed
+
+8. Deleting a recipe
+    a. Go to a recipe you want to delete
+    b. Hit delete and confirm deletion
+    c. Go back to recipe list to see that it is gone
+
+9. Editing a recipe
+    a. Go to a recipe
+    b. Hit Edit and the edit options appear
+    c. Select an item to edit - either course, country, recipe list, ingredient list, or sorting the recipe instruction drop and drag list
+    d. Hit Save
+    e. Go back to the recipe on the recipe list and see it has changed
+
+## Deployment
+
+To install:
+1. Install Flask and Flash-Login
+2. Install SQLAlchemy library
+3. Run tabledef.py to setup the database
+4. run recipeserver.py to run the application
+5. (Optionally) run riddletest.py to test the application
+
+
+Heroku Deployment: https://cookbookproj.herokuapp.com
+
+
+## Credits
+
+### Content
+
+The recipes were retrived from a script from a REST backend at https://www.themealdb.com/
+
+
+### Acknowledgements
+
