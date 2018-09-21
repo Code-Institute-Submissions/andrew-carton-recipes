@@ -82,7 +82,7 @@ I used a build it yourself testing suite in byotest.py. To build the tests, I st
 To install:
 1. Install Flask and Flash-Login
 2. Install SQLAlchemy library
-3. Run tabledef.py to setup the database
+3. The proc file should take care of the installers
 4. run recipeserver.py to run the application
 5. (Optionally) run riddletest.py to test the application
 
