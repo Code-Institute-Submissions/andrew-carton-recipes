@@ -2,9 +2,9 @@
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.sql import select, func
-from classes.direction import Direction
-from classes.ingredient import Ingredient
-from classes.recipe import Recipe
+from model.direction import Direction
+from model.ingredient import Ingredient
+from model.recipe import Recipe
 
 
 class RecipeDatabase:
