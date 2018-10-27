@@ -3,7 +3,7 @@
 <head>
     <title>Cookbook App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/recipe.css') }}" />
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script>
         function coursesstats() {
@@ -238,7 +238,7 @@
 
 </head>
 
-<body onload="doload()">
+<body class="bg" onload="doload()">
 
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
