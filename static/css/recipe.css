@@ -13,9 +13,9 @@ body, html {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;
 }
 
 .bg-yellow {
-    background-color: rgb(242,233,204);
+    background-color: sienna;
 }
