@@ -19,3 +19,7 @@ body, html {
 .bg-yellow {
     background-color: sienna;
 }
+
+.loginpadding {
+    padding: 50px 50px 50px 50px;
+}

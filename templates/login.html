@@ -43,21 +43,41 @@
     {% else %}
     <div class="text-center">
         <h4>Login</h4>
-        <form action="/login" method="POST">
-            <input type="username" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log in">
-        </form>
+        <div class="form-group loginpadding">
+            <form action="/login" method="POST">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="username" class="form-control input-sm" name="username" placeholder="Username">
+                    </div>
+                    <div class="col">
+                        <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-primary" value="Log in">
+                    </div>
+                </div>
+            </form>
+    </div>
     </div>
     <br>
     <br>
     <div class="text-center">
         <h4>Register new username</h4>
-        <form action="/register" method="POST">
-            <input type="username" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Log in">
-        </form>
+        <div class="form-group loginpadding">
+            <form action="/register" method="POST">
+                <div class="form-row">
+                    <div class="col">
+                        <input type="username" class="form-control input-sm" name="username" placeholder="Username">
+                    </div>
+                    <div class="col">
+                        <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+                    </div>
+                    <div class="col">
+                        <input type="submit" class="btn btn-primary" value="Register">
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     {% endif %}
 
