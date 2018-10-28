@@ -47,10 +47,10 @@
             <form action="/login" method="POST">
                 <div class="form-row">
                     <div class="col">
-                        <input type="username" class="form-control input-sm" name="username" placeholder="Username">
+                        <input type="text"  pattern="[A-Za-z1-9]{3,30}" placeholder="3 characters minimum" required class="form-control input-sm" name="username" placeholder="Username">
                     </div>
                     <div class="col">
-                        <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+                        <input type="password" minlength="8" pattern="[A-Za-z1-9]{8,20}" placeholder="8 characters minimum" required class="form-control input-sm" name="password" placeholder="Password">
                     </div>
                     <div class="col">
                         <input type="submit" class="btn btn-primary" value="Log in">
@@ -67,10 +67,10 @@
             <form action="/register" method="POST">
                 <div class="form-row">
                     <div class="col">
-                        <input type="username" class="form-control input-sm" name="username" placeholder="Username">
+                        <input type="text"  pattern="[A-Za-z1-9]{3,30}" placeholder="3 characters minimum" required class="form-control input-sm" name="username" placeholder="Username">
                     </div>
                     <div class="col">
-                        <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+                        <input type="password"  pattern="[A-Za-z1-9]{8, 20}" placeholder="8 characters minimum" required class="form-control input-sm" name="password" placeholder="Password">
                     </div>
                     <div class="col">
                         <input type="submit" class="btn btn-primary" value="Register">
