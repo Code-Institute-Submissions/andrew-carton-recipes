@@ -1,53 +1,22 @@
-<html>
-
-<head>
-    <title>Cookbook App</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/recipe.css') }}" />
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src= "{{ url_for('static',filename='js/graphs.js') }}"></script>
-
-
-</head>
-
-<body class="bg" onload="doload()">
+{% extends 'base.html' %}
+{% block title %}Graphs{% endblock %}
+{% block body_attrs %} onload="doload();" {% endblock %}
+{% block includes %}
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="{{ url_for('static',filename='js/graphs.js') }}"></script>
+{% endblock %}
+{% block content %}
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-yellow fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/listrecipes">Recipe List</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/graphs">Graphs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <br><br><br>
-    <div class="text-center">
-        <h4>Course Stats:</h4>
-        <div id="coursestats"></div><br><br>
-        <h4>Allergen Stats:</h4>
-        <div id="ingredientstats"></div><br><br>
-        <h4>Country Stats:</h4>
-        <div id="chart"></div>
-    </div>
-    <br><br><br>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
 
-
-</html>
+<br><br><br>
+<div class="text-center">
+    <h4>Course Stats:</h4>
+    <div id="coursestats"></div><br><br>
+    <h4>Allergen Stats:</h4>
+    <div id="ingredientstats"></div><br><br>
+    <h4>Country Stats:</h4>
+    <div id="chart"></div>
+</div>
+<br><br><br>
+{% endblock %}

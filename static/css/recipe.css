@@ -34,3 +34,9 @@ body, html {
     border: 2px dashed #000;
 }
 
+.selected {
+    background-color: blue;
+    color: black;
+    font-weight: bold
+}
+
