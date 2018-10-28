@@ -30,3 +30,7 @@ body, html {
     object-fit: cover;
 }
 
+.column.over {
+    border: 2px dashed #000;
+}
+
