@@ -24,7 +24,7 @@
 
 
                 for (var i = 0; i < data.length; i++) {
-                    str += '<div class="col-sm-4">';
+                    str += '<div class="col-sm-4 mb-3">';
                     str += '<div class="card" style="width: 18rem;">';
                     str += '<img class="card-img-top" src="static/';
                     str += '' + data[i].image + '" height="20%" width="20%">';
@@ -65,7 +65,7 @@
 
 
                 for (var i = 0; i < data.length; i++) {
-                    str += '<div class="col-sm-4">';
+                    str += '<div class="col-sm-4 mb-3">';
                     str += '<div class="card" style="width: 18rem;">';
                     str += '<img class="card-img-top" src="static/';
                     str += '' + data[i].image + '" height="20%" width="20%">';
@@ -106,7 +106,7 @@
 
 
                 for (var i = 0; i < data.length; i++) {
-                    str += '<div class="col-sm-4">';
+                    str += '<div class="col-sm-4 mb-3">';
                     str += '<div class="card" style="width: 18rem;">';
                     str += '<img class="card-img-top" src="static/';
                     str += '' + data[i].image + '" height="20%" width="20%">';
@@ -199,7 +199,7 @@
         <div class="row">
 
             {% for x in recipes %}
-            <div class="col-sm-4">
+            <div class="col-sm-4 mb-3">
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="static/{% print x.image %}" height="20%" width="20%">
                     <div class="card-body">
