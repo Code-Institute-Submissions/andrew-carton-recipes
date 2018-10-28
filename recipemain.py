@@ -11,10 +11,8 @@ database = RecipeDatabase("recipes.db")
 
 @app.route('/')
 def home():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        return list_recipes()
+    return render_template('login.html')
+    
 
 
 @app.route('/register', methods=['POST'])
@@ -43,7 +41,7 @@ def do_admin_login():
         session['user'] = POST_USERNAME
     else:
         return 'Wrong password <a href=\'/\'>Try again</a>'
-    return home()
+    return list_recipes()
 
 
 @app.route('/searchexcludeallergen')
@@ -150,7 +148,10 @@ def recipe():
 
 @app.route('/insertrecipe')
 def insert_recipe():
-    return render_template('insertrecipe.html', session=session)
+    if session.get('logged_in'):
+        return render_template('insertrecipe.html', session=session)
+    else:
+        return home()
 
 
 @app.route('/ingredientstats')

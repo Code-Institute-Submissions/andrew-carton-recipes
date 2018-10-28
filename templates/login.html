@@ -35,9 +35,14 @@
         <img src="static/logo.png">
     </div>
 
-    <br><br><br> {% if session['logged_in'] %}
-    <p>You're logged in already!</p>
-    {% else %}
+    
+
+    {% if not session['logged_in'] %}
+    <br><br><br>
+    <div class="text-center">
+        <h4>Please login or register a username and password</h4>
+    </div>
+    
     <div class="text-center">
         <h4>Login</h4>
         <div class="form-group loginpadding">
