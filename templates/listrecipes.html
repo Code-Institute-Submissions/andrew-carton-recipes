@@ -145,9 +145,6 @@
                     <a class="nav-link" href="/listrecipes">Recipe List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/insertrecipe">Insert Recipe</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/graphs">Graphs</a>
                 </li>
                 <li class="nav-item">
@@ -185,6 +182,11 @@
                     <input type="submit" value="Search" class="btn btn-info">
                 </form>
             </div>
+          </div>
+          <div class="col-sm">
+            <form action="/insertrecipe" method="get">
+                <input type="submit" value="Insert Recipe" class="btn btn-danger" name="Submit" id="frm1_submit" />
+            </form>
           </div>
         </div>
       </div>
