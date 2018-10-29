@@ -319,7 +319,7 @@ def insertrecipe():
 def uploaded_file():
     file = request.files['file']
     if file:
-        file.save(os.path.join("static/images", file.filename))
+        file.save(os.path.join("static/images/", file.filename))
 
     return ''
 
