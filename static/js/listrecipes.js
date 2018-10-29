@@ -119,3 +119,8 @@ function searchByCourse() {
     xmlhttp.open("GET", sstr, true);
     xmlhttp.send();
 }
+
+function insertAlertAndRedirect() {
+    alert("Please login first before you insert recipe");
+    window.location.replace("/insertrecipe");
+}

@@ -17,23 +17,28 @@ body, html {
 }
 
 .bg-yellow {
+    /* Background colour of bootstrap nav bar */
     background-color: sienna;
 }
 
+/* Padding around the login boxes */
 .loginpadding {
     padding: 50px 50px 50px 50px;
 }
 
+/* Don't scale the image on the card */
 .card-img-top {
     width: 100%;
     height: 15vw;
     object-fit: cover;
 }
 
+/* Dashed border around column */
 .column.over {
     border: 2px dashed #000;
 }
 
+/* Change selected links background / colour */
 .selected {
     background-color: blue;
     color: black;
