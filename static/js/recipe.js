@@ -47,10 +47,10 @@ function reorder() {
 
 function handleDragOver(e) {
     if (e.preventDefault) {
-        e.preventDefault(); // Necessary. Allows us to drop.
+        e.preventDefault(); 
     }
 
-    e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
+    e.dataTransfer.dropEffect = 'move'; 
 
     return false;
 }
@@ -62,10 +62,10 @@ function handleDragEnter(e) {
 
 function handleDragOver(e) {
     if (e.preventDefault) {
-        e.preventDefault(); // Necessary. Allows us to drop.
+        e.preventDefault(); 
     }
 
-    e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
+    e.dataTransfer.dropEffect = 'move'; 
 
     return false;
 
