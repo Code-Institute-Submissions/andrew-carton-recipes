@@ -69,7 +69,8 @@ var ingnum = 1;
             xmlhttp.setRequestHeader("Content-Type", "application/json");
             xmlhttp.send(JSON.stringify(ingrObj));
 
-            var x = document.getElementById("fullrecipe");
-            x.innerHTML = "<h5>Thank you for submitting the " + ingrObj.name + " recipe!"
+            
+            alert("Thank you for submitting the " + ingrObj.name + " recipe!");
+            window.location.replace("/listrecipes");
 
         }
