@@ -8,7 +8,7 @@ function searchByAllergen() {
 
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
     sstr += allergenid.value;
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.responseText);
             var recipesdiv = document.getElementById("recipes");
@@ -48,7 +48,7 @@ function searchByIngredient() {
 
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
     sstr += ingredientid.value;
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.responseText);
             var recipesdiv = document.getElementById("recipes");
@@ -90,7 +90,7 @@ function searchByCourse() {
 
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
     sstr += courseid.value;
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var data = JSON.parse(this.responseText);
             var recipesdiv = document.getElementById("recipes");

@@ -1,7 +1,7 @@
 function coursesstats() {
     var data = []
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             data = JSON.parse(this.responseText);
 
@@ -9,7 +9,7 @@ function coursesstats() {
                 height = 300,
                 radius = Math.min(width, height) / 2;
             var color = d3.scaleOrdinal(d3.schemeCategory10);
-            var pie = d3.pie().value(function(d) {
+            var pie = d3.pie().value(function (d) {
                 return d.amount;
             })(data);
             var arc = d3.arc().outerRadius(radius - 10).innerRadius(0);
@@ -19,15 +19,15 @@ function coursesstats() {
 
             var g = svg.selectAll("arc").data(pie).enter().append("g")
                 .attr("class", "arc");
-            g.append("path").attr("d", arc).style("fill", function(d) {
+            g.append("path").attr("d", arc).style("fill", function (d) {
                 return color(d.data.course);
             });
 
-            g.append("text").attr("transform", function(d) {
-                    return "translate(" + labelArc.centroid(d) + ")";
-                }).text(function(d) {
-                    return d.data.course;
-                })
+            g.append("text").attr("transform", function (d) {
+                return "translate(" + labelArc.centroid(d) + ")";
+            }).text(function (d) {
+                return d.data.course;
+            })
                 .style("fill", "#fff");
 
         }
@@ -39,7 +39,7 @@ function coursesstats() {
 function ingredientstats() {
     var data = []
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             data = JSON.parse(this.responseText);
 
@@ -48,11 +48,11 @@ function ingredientstats() {
 
 
             var margin = {
-                    top: 20,
-                    right: 20,
-                    bottom: 30,
-                    left: 40
-                },
+                top: 20,
+                right: 20,
+                bottom: 30,
+                left: 40
+            },
                 width = 360 - margin.left - margin.right,
                 height = 300 - margin.top - margin.bottom;
 
@@ -74,10 +74,10 @@ function ingredientstats() {
 
 
 
-            x.domain(data.map(function(d) {
+            x.domain(data.map(function (d) {
                 return d.ingredient;
             }));
-            y.domain([0, d3.max(data, function(d) {
+            y.domain([0, d3.max(data, function (d) {
                 return d.amount;
             })]);
 
@@ -86,17 +86,17 @@ function ingredientstats() {
                 .data(data)
                 .enter().append("rect")
                 .attr("class", "bar")
-                .attr("x", function(d) {
+                .attr("x", function (d) {
                     return x(d.ingredient);
                 })
                 .attr("width", x.bandwidth())
-                .attr("y", function(d) {
+                .attr("y", function (d) {
                     return y(d.amount);
                 })
-                .attr("height", function(d) {
+                .attr("height", function (d) {
                     return height - y(d.amount);
                 })
-                .attr("fill", function(d) {
+                .attr("fill", function (d) {
                     return color(data.ingredient);
                 });
 
@@ -125,7 +125,7 @@ function type(d) {
 function countrystats() {
     var data = []
     var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
-    xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             data = JSON.parse(this.responseText);
 
@@ -153,7 +153,7 @@ function countrystats() {
                 .outerRadius(radius);
 
             var pie = d3.pie()
-                .value(function(d) {
+                .value(function (d) {
                     return d.amount;
                 })
                 .sort(null);
@@ -162,7 +162,7 @@ function countrystats() {
                 .data(pie(data))
                 .enter()
                 .append("g")
-                .on("mouseover", function(d) {
+                .on("mouseover", function (d) {
                     let g = d3.select(this)
                         .style("cursor", "pointer")
                         .style("fill", "black")
@@ -181,7 +181,7 @@ function countrystats() {
                         .attr('text-anchor', 'middle')
                         .attr('dy', '.6em');
                 })
-                .on("mouseout", function(d) {
+                .on("mouseout", function (d) {
                     d3.select(this)
                         .style("cursor", "none")
                         .style("fill", color(this._current))
@@ -190,17 +190,17 @@ function countrystats() {
                 .append('path')
                 .attr('d', arc)
                 .attr('fill', (d, i) => color(i))
-                .on("mouseover", function(d) {
+                .on("mouseover", function (d) {
                     d3.select(this)
                         .style("cursor", "pointer")
                         .style("fill", "black");
                 })
-                .on("mouseout", function(d) {
+                .on("mouseout", function (d) {
                     d3.select(this)
                         .style("cursor", "none")
                         .style("fill", color(this._current));
                 })
-                .each(function(d, i) {
+                .each(function (d, i) {
                     this._current = i;
                 });
 
