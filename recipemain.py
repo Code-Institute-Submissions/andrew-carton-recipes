@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask import request, session
-from sqlalchemy.sql import select, func
+from sqlalchemy.sql import select, func, desc
 from recipedatabase import RecipeDatabase
 import os
 import json
@@ -258,7 +258,7 @@ def logout():
 
 @app.route('/listrecipes')
 def list_recipes():
-    s = select([database.recipes])
+    s = select([database.recipes]).order_by(desc(database.recipes.c.id))
     conn = database.engine.connect()
     result = conn.execute(s)
     rs = []
