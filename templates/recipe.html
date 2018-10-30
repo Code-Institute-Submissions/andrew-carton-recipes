@@ -24,47 +24,64 @@
         <button type="button" class="btn btn-primary" id="savebutton" onclick="saveAll()" disabled>Save</button>
         <button type="button" class="btn btn-primary" id="deletebutton" onclick="deleterecipe()">Delete</button>
         <br><br>
-        <div id="editing"></div>
-        <br>
-        <h4>Recipe name: {% print recipe.name %}</h4>
-        <img src="static/images/{% print recipe.image %}" />
-        <h5>Course: {% print recipe.course %}</h5>
-        <div id="courseform"></div>
-        <h5>Country: {% print recipe.country %}</h5>
-        <div id="countryform"></div>
-        <h5>Author: {% print recipe.author %}</h5>
-        <h5>Views: {% print recipe.views %}</h5>
-        <h5> Ingredient List:</h5>
-        <table class="ingredients" id="ingredients" style="padding:20px">
+        
+        
+        <div class="container">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="recipe-padding">
+                    <div id="editing"></div>
+                    <br>
+                    <h4>Recipe name: {% print recipe.name %}</h4>
+                    
+                    <h5>Course: {% print recipe.course %}</h5>
+                    <div id="courseform"></div>
+                    <h5>Country: {% print recipe.country %}</h5>
+                    <div id="countryform"></div>
+                    <h5>Author: {% print recipe.author %}</h5>
+                    <h5>Views: {% print recipe.views %}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                    <img src="static/images/{% print recipe.image %}" />
+            </div>
+        
+            <div class="col-xs-6 recipe-ingredients">
+                <h5> Ingredient List:</h5>
+                    <table class="ingredients" id="ingredients" style="padding:20px">
 
-            {% for y in recipe.ingredients %}
-            <tr>
-                <td style="padding:0 15px 0 15px;">{% print y.name %}</td>
-                <td style="padding:0 15px 0 15px;">{% print y.amount %}</td>
-                <td style="padding:0 15px 0 15px;">{% print y.allergen %}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <br>
+                        {% for y in recipe.ingredients %}
+                        <tr>
+                            <td style="padding:0 15px 0 15px;">{% print y.name %}</td>
+                            <td style="padding:0 15px 0 15px;">{% print y.amount %}</td>
+                            <td style="padding:0 15px 0 15px;">{% print y.allergen %}</td>
+                        </tr>
+                        {% endfor %}
+                </table>
+                <div id="ingredientform"></div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 recipe-directions">
+                
+                <h5>Directions:</h5>
+                <table class="directions" id="directions" style="padding:20px">
+                    {% for y in recipe.directions %}
+                    <tr draggable="true" class="column">
+                        <td style="padding:10px 15px 0 15px;">{% print y.number %}</td>
+                        <td style="padding:10px 15px 0 15px;">{% print y.text %}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-        <div id="ingredientform"></div>
-        <br>
-        <br>
-        <h5>Directions:</h5>
-        <table class="directions" id="directions" style="padding:20px">
-            {% for y in recipe.directions %}
-            <tr draggable="true" class="column">
-                <td style="padding:10px 15px 0 15px;">{% print y.number %}</td>
-                <td style="padding:10px 15px 0 15px;">{% print y.text %}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <br>
+                <div id="directionform"></div>
+            </div>
 
-        <div id="directionform"></div>
-        <br>
-        <br>
-
+        </div>
+    </div>
     </div>
 
 {% endblock %}

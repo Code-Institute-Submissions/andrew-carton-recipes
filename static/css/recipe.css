@@ -45,3 +45,32 @@ body, html {
     font-weight: bold
 }
 
+.recipe-ingredients {
+    background-color: rgba(42, 96, 212, 0.8);
+    border-radius: 10px;
+    
+}
+
+.recipe-directions {
+    background-color: rgba(219, 228, 144, 0.93);
+    border-radius: 10px;
+    
+}
+
+.recipe-description {
+    background-color: rgba(235, 151, 112, 0.93);
+    border-radius: 10px;
+    
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.recipe-padding {
+    padding-top: 20px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}

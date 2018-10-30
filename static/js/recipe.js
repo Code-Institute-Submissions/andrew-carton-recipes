@@ -215,6 +215,7 @@ function addDirectionForm() {
 
     i4 = document.createElement("input");
     i4.type = "submit";
+    i4.class = "btn btn-primary";
     i4.value = "Add Direction";
     f.appendChild(i4);
 
@@ -278,6 +279,7 @@ function addIngredientForm() {
 
     i4 = document.createElement("input");
     i4.type = "submit";
+    i4.class = "btn btn-primary";
     i4.value = "Add Ingredient";
     f.appendChild(i4);
 
