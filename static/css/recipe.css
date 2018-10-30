@@ -52,16 +52,11 @@ body, html {
 }
 
 .recipe-directions {
-    background-color: rgba(219, 228, 144, 0.93);
+    background-color: rgba(245, 236, 117, 0.93);
     border-radius: 10px;
     
 }
 
-.recipe-description {
-    background-color: rgba(235, 151, 112, 0.93);
-    border-radius: 10px;
-    
-}
 
 .container {
     margin-right: auto;
@@ -73,4 +68,18 @@ body, html {
     padding-right: 10px;
     padding-bottom: 20px;
     padding-left: 10px;
+}
+
+nav ul li a:hover {
+    background: #b0ca34; /* Old browsers */
+    font-weight:bold;
+}
+
+nav ul li:first-child a {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+ }
+  nav ul li:last-child a {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px; 
 }
