@@ -23,29 +23,16 @@ body, html {
 
 
 .navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
-    color: black;
+    color: white;
 }
 .navbar-dark .navbar-nav .nav-link {
-    color: rgba(0,0,0,.5);
+    color: rgba(255,255,255,.5);
 }
 
 .container {
-    padding-top:200px;
+    padding-top:300px;
 }
- .custom-nav {
-    background-color: rgba(255, 255, 255, .8);
-    text-align: center;
-    display: inline-block;
-    width: 100px;
-    border: 2px solid blue;
-    border-radius: 5px;
-    padding: 1px 2px;
-    margin: 0 2px;
-    cursor: pointer;
-    font-weight: bold;
-    color: gray;
-    box-shadow: 1px 1px 5px 0;
-}
+ 
 
 .navbar-light .navbar-brand {
     color: white;
