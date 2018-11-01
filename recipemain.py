@@ -3,6 +3,8 @@ from flask import request, session
 from sqlalchemy.sql import select, func, desc
 from recipedatabase import RecipeDatabase
 import os
+from os import listdir
+from os.path import isfile, join
 import json
 
 
@@ -11,7 +13,16 @@ database = RecipeDatabase("recipes.db")
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    mypath = 'static/images/'
+    allfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    files = []
+    for f in allfiles:
+        if f == "recipe-background.jpg" or f == 'default.png':
+            continue
+        else:
+            files.append(f)
+
+    return render_template('login.html', files=files)
     
 
 

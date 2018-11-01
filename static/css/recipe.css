@@ -2,7 +2,7 @@ body, html {
     position: relative;
     height: 100%;
     bottom: 50px;
-    padding-top: 40px;
+    padding-top: 70px;
     overflow-y:scroll;
     overflow-x: hidden;
 }
@@ -22,8 +22,16 @@ body, html {
 }
 
 
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+    color: black;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(0,0,0,.5);
+}
 
-
+.container {
+    padding-top:200px;
+}
  .custom-nav {
     background-color: rgba(255, 255, 255, .8);
     text-align: center;
@@ -111,4 +119,9 @@ footer {
 
 .nbar-black {
     background-color: black;
+}
+
+.carousel {
+    width:240px;
+    height:240px;
 }
