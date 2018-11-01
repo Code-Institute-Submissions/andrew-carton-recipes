@@ -22,23 +22,25 @@ def home():
         else:
             files.append(f)
 
-    return render_template('login.html', files=files)
+    return render_template('login.html', files=files, session=session)
     
 
-
 @app.route('/register', methods=['POST'])
-def do_admin_register():
-    POST_USERNAME = str(request.form['username'])
-    POST_PASSWORD = str(request.form['password'])
+def do_register():
+    content = request.get_json()
+    if len(content['username']) <= 3 or len(content['username']) > 20:
+        return json.dumps({'success':False, 'message': 'Username must be greater than 3 characters and smaller than 20'}), 500, {'ContentType':'application/json'} 
+    
+    if len(content['password']) <= 3 or  len(content['password']) > 20:
+        return json.dumps({'success':False, 'message': 'Password must be greater than 3 characters'}), 500, {'ContentType':'application/json'} 
+    
     conn = database.engine.connect()
-    success = database.user_register(POST_USERNAME, POST_PASSWORD, conn)
+    success = database.user_register(content['username'], content['password'], conn)
     conn.close()
-    if not success:
-        return('Name taken <br><a href=\'/\'>Try again</a>')
+    if success:
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
     else:
-        return('Username created <br><a href=\'/\'>Login</a>')
-    return home()
-
+        return json.dumps({'success':False, 'message': 'Username taken'}), 500, {'ContentType':'application/json'} 
 
 @app.route('/login', methods=['POST'])
 def do_admin_login():
