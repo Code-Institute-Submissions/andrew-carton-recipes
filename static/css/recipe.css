@@ -1,5 +1,10 @@
 body, html {
+    position: relative;
     height: 100%;
+    bottom: 50px;
+    padding-top: 40px;
+    overflow-y:scroll;
+    overflow-x: hidden;
 }
 
 .bg { 
@@ -13,13 +18,53 @@ body, html {
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
 }
 
-.bg-yellow {
-    /* Background colour of bootstrap nav bar */
-    background-color: sienna;
+
+
+
+ .custom-nav {
+    background-color: rgba(255, 255, 255, .8);
+    text-align: center;
+    display: inline-block;
+    width: 100px;
+    border: 2px solid blue;
+    border-radius: 5px;
+    padding: 1px 2px;
+    margin: 0 2px;
+    cursor: pointer;
+    font-weight: bold;
+    color: gray;
+    box-shadow: 1px 1px 5px 0;
 }
+
+.navbar-light .navbar-brand {
+    color: white;
+} 
+
+.navbar-light .navbar-brand:hover {
+    color: white;
+} 
+
+.myfont {
+    font-family: "Satisfy", serif;
+}
+
+.whitefont {
+    color: white;
+}
+
+footer {
+    position: fixed;
+    background-color: #000;
+    height: 100px;
+    width: 100%;
+     
+    left: 0; bottom: 0px; right: 0; 
+    text-align: center;
+}
+
 
 /* Padding around the login boxes */
 .loginpadding {
@@ -57,12 +102,6 @@ body, html {
     
 }
 
-
-.container {
-    margin-right: auto;
-    margin-left: auto;
-}
-
 .recipe-padding {
     padding-top: 20px;
     padding-right: 10px;
@@ -70,16 +109,6 @@ body, html {
     padding-left: 10px;
 }
 
-nav ul li a:hover {
-    background: #b0ca34; /* Old browsers */
-    font-weight:bold;
-}
-
-nav ul li:first-child a {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
- }
-  nav ul li:last-child a {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px; 
+.nbar-black {
+    background-color: black;
 }

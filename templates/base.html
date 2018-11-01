@@ -3,32 +3,46 @@
             <title>{% block title %}{% endblock %}</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
             <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/recipe.css') }}" />
+            <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
             {% block includes %} {% endblock %}
     </head>
 
     <body class="bg" {% block body_attrs %}{% endblock %}>
-        <nav class=" navbar navbar-expand-lg navbar-light bg-yellow fixed-top">
+        <nav class=" navbar navbar-expand-lg navbar-light fixed-top nbar-black">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+            <div class="mx-auto order-0">
+                <a class="navbar-brand mx-auto myfont" href="#" >Andrew's Recipes</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse w-100 order-2 dual-collapse2" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item {% block nav_home %}{% endblock %}" >
-                        <a class="nav-link"  href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link custom-nav myfont"  href="/">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item {% block nav_rlist %}{% endblock %}" >
-                        <a class="nav-link"  href="/listrecipes">Recipe List</a>
+                        <a class="nav-link custom-nav myfont"  href="/listrecipes">Recipes</a>
                     </li>
                     <li class="nav-item {% block nav_graphs %}{% endblock %}"   >
-                         <a class="nav-link"href="/graphs">Graphs</a>
+                         <a class="nav-link custom-nav myfont" href="/graphs">Graphs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">Logout</a>
+                        <a class="nav-link custom-nav myfont " href="/logout">Logout</a>
                     </li>
                 </ul>
             </div>
         </nav>
         {% block content %}{% endblock %}
+        <footer class="container-fluid">
+            <br /><br />
+            <div class="col">
+                <p class="myfont whitefont">©2018 Andrew's recipes |Andrew Carton</p>
+            </div>
+        </footer>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

@@ -3,55 +3,5 @@
 {% block nav_home %}active{% endblock %}
 {% block content %}
     <br><br><br>
-    <div class="text-center">
-        <img src="static/images/logo.png">
-    </div>
 
-    
-
-    {% if not session['logged_in'] %}
-    <br><br><br>
-    <div class="text-center">
-        <h4>Please login or register a username and password</h4>
-    </div>
-
-    <div class="text-center">
-        <h4>Login</h4>
-        <div class="form-group loginpadding">
-            <form action="/login" method="POST">
-                <div class="form-row">
-                    <div class="col">
-                        <input type="text"  pattern="[A-Za-z1-9]{3,30}" placeholder="3 characters minimum" required class="form-control input-sm" name="username" placeholder="Username">
-                    </div>
-                    <div class="col">
-                        <input type="password" minlength="8" pattern="[A-Za-z1-9]{8,20}" placeholder="8 characters minimum" required class="form-control input-sm" name="password" placeholder="Password">
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-primary" value="Log in">
-                    </div>
-                </div>
-            </form>
-    </div>
-    </div>
-    <br>
-    <br>
-    <div class="text-center">
-        <h4>Register new username</h4>
-        <div class="form-group loginpadding">
-            <form action="/register" method="POST">
-                <div class="form-row">
-                    <div class="col">
-                        <input type="text"  pattern="[A-Za-z1-9]{3,30}" placeholder="3 characters minimum" required class="form-control input-sm" name="username" placeholder="Username">
-                    </div>
-                    <div class="col">
-                        <input type="password"  pattern="[A-Za-z1-9]{8, 20}" placeholder="8 characters minimum" required class="form-control input-sm" name="password" placeholder="Password">
-                    </div>
-                    <div class="col">
-                        <input type="submit" class="btn btn-primary" value="Register">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    {% endif %}
 {% endblock %}
