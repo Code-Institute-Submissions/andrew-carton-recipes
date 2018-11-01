@@ -54,6 +54,33 @@ body, html {
 .top-border {
     border-top: 1.5px solid #000;
 }
+
+.form-padding {
+    padding-top: 50px;
+}
+.ingredient-list {
+    padding-top:10px;
+    padding-left:10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .6);
+    border-radius: 10px;
+}
+
+.table-width {
+    width: 100%;
+}
+.directions-list {
+    padding-top:10px;
+    padding-left:10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .6);
+    border-radius: 10px;
+}
+
 .recipe-list-page-container {
     padding-top:10px;
     margin-top: 30px;
@@ -69,6 +96,17 @@ body, html {
     background-color: rgba(255, 255, 255, .7);
     border-radius: 10px;
 }
+
+.insert-recipe-page-container {
+    padding-top:10px;
+    padding-bottom:20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .7);
+    border-radius: 10px;
+}
+
+
 .navbar-light .navbar-brand {
     color: white;
 } 

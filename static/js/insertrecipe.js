@@ -28,7 +28,7 @@ function addIngredient() {
     ingobj.allergen = aid.value;
     ingobj.amount = amid.value;
     ingrlist = ingrlist.concat(ingobj);
-    tid.innerHTML += "<tr><td>" + ingnum++ + "</td><td>" + id.value + "</td><td>" + amid.value + "</td><td>" + aid.value + "</td></tr>";
+    tid.innerHTML += "<tr><td class=\"myfont\">" + ingnum++ + "</td><td class=\"myfont\">" + id.value + "</td><td class=\"myfont\">" + amid.value + "</td><td class=\"myfont\">" + aid.value + "</td></tr>";
     id.value = '';
     aid.value = '';
     amid.value = '';
@@ -41,7 +41,7 @@ function addDirection() {
     var id = document.getElementById("direction");
 
     var tid = document.getElementById("directions_table");
-    tid.innerHTML += "<tr><td>" + dirnum++ + "</td><td>" + id.value + "</td></tr>";
+    tid.innerHTML += "<tr><td class=\"myfont\">" + dirnum++ + "</td><td class=\"myfont\">" + id.value + "</td></tr>";
     var dirobj = new Object();
     dirobj.direction = id.value;
     dirlist = dirlist.concat(dirobj);
