@@ -29,10 +29,18 @@ body, html {
     color: rgba(255,255,255,.5);
 }
 
-.container {
+.login-page-container {
     padding-top:300px;
+    
 }
- 
+
+.graph-page-container {
+    padding-top:100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .7);
+    border-radius: 10px;
+}
 
 .navbar-light .navbar-brand {
     color: white;

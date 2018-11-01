@@ -41,21 +41,7 @@ def do_register():
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
     else:
         return json.dumps({'success':False, 'message': 'Username taken'}), 500, {'ContentType':'application/json'} 
-"""
-@app.route('/login', methods=['POST'])
-def do_admin_login():
-    POST_USERNAME = str(request.form['username'])
-    POST_PASSWORD = str(request.form['password'])
-    conn = database.engine.connect()
-    success = database.user_authenticate(POST_USERNAME, POST_PASSWORD, conn)
-    conn.close()
-    if success:
-        session['logged_in'] = True
-        session['user'] = POST_USERNAME
-    else:
-        return 'Wrong password <a href=\'/\'>Try again</a>'
-    return list_recipes()
-"""
+
 @app.route('/login', methods=['POST'])
 def do_login():
     content = request.get_json()
