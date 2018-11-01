@@ -7,7 +7,7 @@ function addIngredient() {
 
 
 
-    tid.innerHTML += "<tr><td style=\"padding:0 15px 0 15px;\">" + id.value + "</td><td style=\"padding:0 15px 0 15px;\">" + amid.value + "</td><td style=\"padding:0 15px 0 15px;\">" + aid.value + "</td></tr>";
+    tid.innerHTML += "<tr><td class=\"myfont table-padding\">" + id.value + "</td><td class=\"myfont table-padding\">" + amid.value + "</td><td class=\"myfont table-padding\">" + aid.value + "</td></tr>";
     id.value = '';
     aid.value = '';
     amid.value = '';
@@ -22,7 +22,7 @@ function addDirection() {
     var tid = document.getElementById("directions");
     var rows = tid.rows;
     var dirnum = tid.rows.length;
-    tid.innerHTML += "<tr draggable=\"true\" class=\"column\" style=\"cursor: move;\"><td style=\"padding:10px 15px 0 15px;\">" + dirnum++ + "</td><td style=\"padding:10px 15px 0 15px;\">" + id.value + "</td></tr>";
+    tid.innerHTML += "<tr draggable=\"true\" class=\"column\" style=\"cursor: move;\"><td class=\"myfont table-padding\">" + dirnum++ + "</td><td class=\"myfont table-padding\">" + id.value + "</td></tr>";
 
     var tid = document.getElementById("directions");
     var rows = tid.rows;
@@ -169,7 +169,7 @@ function addRemove() {
 
     var table = document.getElementById('ingredients');
     var rows = table.rows;
-    for (var i = 0; i < rows.length; i++) {
+    for (var i = 1; i < rows.length; i++) {
 
         cell = rows[i].insertCell(rows[i].cells.length);
         cell.style.color = "red";
@@ -208,14 +208,15 @@ function addDirectionForm() {
 
     i1 = document.createElement("input");
     i1.type = "text";
-    i1.id = "direction"
+    i1.id = "direction";
+    i1.setAttribute('size', 50);
     i1.placeholder = "Direction";
     f.appendChild(i1);
 
 
     i4 = document.createElement("input");
     i4.type = "submit";
-    i4.class = "btn btn-primary";
+    i4.className = "btn btn-primary myfont";
     i4.value = "Add Direction";
     f.appendChild(i4);
 
@@ -261,25 +262,27 @@ function addIngredientForm() {
 
     i1 = document.createElement("input");
     i1.type = "text";
-    i1.id = "ingredient"
+    i1.id = "ingredient";
     i1.placeholder = "Ingredient";
     f.appendChild(i1);
 
     i2 = document.createElement("input");
     i2.type = "text";
-    i2.id = "amount"
+    i2.id = "amount";
+    i2.setAttribute('size', 10);
     i2.placeholder = "Amount";
     f.appendChild(i2);
 
     i3 = document.createElement("input");
     i3.type = "text";
-    i3.id = "allergen"
+    i3.id = "allergen";
+    i3.setAttribute('size', 10);
     i3.placeholder = "Allergen";
     f.appendChild(i3);
 
     i4 = document.createElement("input");
     i4.type = "submit";
-    i4.class = "btn btn-primary";
+    i4.className = "btn btn-primary myfont";
     i4.value = "Add Ingredient";
     f.appendChild(i4);
 
@@ -357,7 +360,7 @@ function saveAll() {
     table = document.getElementById('ingredients');
 
     rows = table.rows;
-    for (var i = 0; i < rows.length; i++) {
+    for (var i = 1; i < rows.length; i++) {
 
         var ingobj = new Object();
         ingobj.ingredient = rows[i].cells[0].innerHTML;
