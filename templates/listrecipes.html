@@ -8,65 +8,70 @@
 
 
 
-    <br><br><br>
-    <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <div id="filter" style="padding:10px;">
-                <form action="javascript:searchByCourse();" method="POST">
-                    <h5>Search by Course:</h5>
-                    <input type="text" name="course" id="course">
-                    <input type="submit" value="Search" class="btn btn-primary">
-                </form>
+    <div class="container recipe-list-page-container " >
+            <div class="row justify-content-center top-border top-padding">
+                    <h2 class="myfont">Search By:
+                    </h2>
             </div>
-          </div>
-          <div class="col-sm">
-            <div id="filter" style="padding:10px;">
-                <form action="javascript:searchByIngredient();" method="POST">
-                    <h5>Search by Ingredient:</h5>
-                    <input type="text" name="ingredient" id="ingredient">
-                    <input type="submit" value="Search" class="btn btn-success">
-                </form>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div id="filter" style="padding:10px;">
-                <form action="javascript:searchByAllergen();" method="POST">
-                    <h5>Search Exclude Allergen:</h5>
-                    <input type="text" name="allergen"  id="allergen">
-                    <input type="submit" value="Search" class="btn btn-info">
-                </form>
-            </div>
-          </div>
-          <div class="col-sm">
-            <br><br><br>
-            <form action="/insertrecipe" method="get">
-                <input type="submit" value="Insert Recipe" class="btn btn-danger" name="Submit" id="frm1_submit" />
-            </form>
-          </div>
-        </div>
-      </div>
-
-    
-    
-    
-
-    <br>
-    <h4>Recipe List</h4>
-    <div class="recipes" id="recipes" style="padding:20px">
-        <div class="row">
-
-            {% for x in recipes %}
-            <div class="col-sm-4 mb-3">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="static/images/{% print x.image %}" height="20%" width="20%">
-                    <div class="card-body">
-                        <h5 class="card-title">{% print x.name %}</h5>
-                        <p class="card-text">A {% print x.course %} {% print x.country %} dish </p>
-                        <a href="recipe?id={% print x.id %}" class="btn btn-primary">View Recipe</a>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div id="filter" class="filter-padding">
+                        <form action="javascript:searchByCourse();" method="POST">
+                            <h5>Course:</h5>
+                            <input type="text" name="course" id="course">
+                            <input type="submit" value="Search" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="filter" class="filter-padding">
+                        <form action="javascript:searchByIngredient();" method="POST">
+                            <h5>Ingredient:</h5>
+                            <input type="text" name="ingredient" id="ingredient">
+                            <input type="submit" value="Search" class="btn btn-success">
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <div id="filter" class="filter-padding">
+                        <form action="javascript:searchByAllergen();" method="POST">
+                            <h5>Exclude Allergen:</h5>
+                            <input type="text" name="allergen"  id="allergen">
+                            <input type="submit" value="Search" class="btn btn-info">
+                        </form>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+
+
+            <div class="row justify-content-center top-border top-padding">
+                <h2 class="myfont">Recipes</h2>
+            </div>
+            <div class="row justify-content-center">
+                
+                <div class="recipes" id="recipes" style="padding:20px">
+                    <div class="row">
+
+                        {% for x in recipes %}
+                            <div class="col-sm-4 mb-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="static/images/{% print x.image %}" height="20%" width="20%">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{% print x.name %}</h5>
+                                        <p class="card-text">A {% print x.course %} {% print x.country %} dish </p>
+                                        <a href="recipe?id={% print x.id %}" class="btn btn-primary">View Recipe</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                 </div>
+            </div>
+
+        
+        
+        
+        
+    
 
 {% endblock %}

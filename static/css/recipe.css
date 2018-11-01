@@ -34,8 +34,25 @@ body, html {
     
 }
 
+.top-padding {
+    padding-top: 30px;
+}
+.filter-padding {
+    padding:10px;
+}
 .graph-page-container {
     padding-top:100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, .7);
+    border-radius: 10px;
+}
+
+.top-border {
+    border-top: 1.5px solid #000;
+}
+.recipe-list-page-container {
+    padding-top:10px;
     margin-top: 30px;
     margin-bottom: 30px;
     background-color: rgba(255, 255, 255, .7);
