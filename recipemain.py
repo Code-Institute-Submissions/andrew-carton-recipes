@@ -41,7 +41,7 @@ def do_register():
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
     else:
         return json.dumps({'success':False, 'message': 'Username taken'}), 500, {'ContentType':'application/json'} 
-
+"""
 @app.route('/login', methods=['POST'])
 def do_admin_login():
     POST_USERNAME = str(request.form['username'])
@@ -55,7 +55,25 @@ def do_admin_login():
     else:
         return 'Wrong password <a href=\'/\'>Try again</a>'
     return list_recipes()
-
+"""
+@app.route('/login', methods=['POST'])
+def do_login():
+    content = request.get_json()
+    if len(content['username']) <= 3 or len(content['username']) > 20:
+        return json.dumps({'success':False, 'message': 'Username must be greater than 3 characters and smaller than 20'}), 500, {'ContentType':'application/json'} 
+    
+    if len(content['password']) <= 3 or  len(content['password']) > 20:
+        return json.dumps({'success':False, 'message': 'Password must be greater than 3 characters'}), 500, {'ContentType':'application/json'} 
+    
+    conn = database.engine.connect()
+    success = database.user_authenticate(content['username'], content['password'], conn)
+    conn.close()
+    if success:
+        session['logged_in'] = True
+        session['user'] = content['username']
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+    else:
+        return json.dumps({'success':False, 'message': 'Authentication failed'}), 500, {'ContentType':'application/json'} 
 
 @app.route('/searchexcludeallergen')
 def searchexcludeallergen():
