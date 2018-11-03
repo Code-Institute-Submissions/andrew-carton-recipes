@@ -165,22 +165,27 @@ function type(d) {
  * and then formats it to javascript data structure and uses it to form a donut chart using d3
  */
 function countrystats() {
+    // The data held in javascript
     var data = []
+    // The AJAX request
     var xmlhttp = new XMLHttpRequest(); 
     xmlhttp.onreadystatechange = function () {
+        // Function to process response
         if (this.readyState == 4 && this.status == 200) {
             data = JSON.parse(this.responseText);
 
             var text = "";
-
+            // dimension variables
             var width = 260;
             var height = 260;
             var thickness = 40;
             var duration = 750;
-
+            // radius of donut chart
             var radius = Math.min(width, height) / 2;
+            // random colour scheme
             var color = d3.scaleOrdinal(d3.schemeCategory10);
 
+            // Select the chart to create
             var svg = d3.select("#chart")
                 .append('svg')
                 .attr('class', 'pie')
@@ -194,12 +199,15 @@ function countrystats() {
                 .innerRadius(radius - thickness)
                 .outerRadius(radius);
 
+            // Give the chart the data to process with
             var pie = d3.pie()
                 .value(function (d) {
                     return d.amount;
                 })
                 .sort(null);
 
+            // Create the 'donut' variant of the pie chart
+            // with mouseover functions
             var path = g.selectAll('path')
                 .data(pie(data))
                 .enter()
@@ -246,7 +254,7 @@ function countrystats() {
                     this._current = i;
                 });
 
-
+            // The Text in the middle
             g.append('text')
                 .attr('text-anchor', 'middle')
                 .attr('dy', '.35em')
@@ -254,6 +262,7 @@ function countrystats() {
 
         }
     }
+    // The AJAX requet opened and sent
     xmlhttp.open("GET", "/countrystats", true);
     xmlhttp.send();
 }
