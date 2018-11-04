@@ -11,9 +11,12 @@ function send() {
         data: form_data,
         processData: false,
         contentType: false,
+        success: function (data) {
+            var id = document.getElementById("myimage");
+            id.innerHTML = '<img src="/static/images/' + x.name + '" />';
+        }
     });
-    var id = document.getElementById("myimage");
-    id.innerHTML = '<img src="/static/images/' + x.name + '" />';
+   
 }
 
 function addIngredient() {

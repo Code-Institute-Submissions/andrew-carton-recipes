@@ -8,7 +8,7 @@ function coursesstats() {
     var data = []
     // AJAX http request
     var xmlhttp = new XMLHttpRequest();
-    
+
     // Callback function for successfull AJAX request
 
     xmlhttp.onreadystatechange = function () {
@@ -31,10 +31,10 @@ function coursesstats() {
 
             // Generate arc
             var arc = d3.arc().outerRadius(radius - 10).innerRadius(0);
-            
+
             // Generate label for arc
             var labelArc = d3.arc().outerRadius(radius - 40).innerRadius(radius - 40);
-            
+
             // Generate SVG item and transform and translate it.
             var svg = d3.select("#coursestats").append("svg").attr("width", width).attr("height", height).append("g")
                 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
@@ -86,15 +86,15 @@ function ingredientstats() {
                 bottom: 30,
                 left: 40
             },
-            
-            // Calculate the width and height using an adequate size for all devices
-            width = 360 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+
+                // Calculate the width and height using an adequate size for all devices
+                width = 360 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
 
             // Random colour scheme
             var color = d3.scaleOrdinal(d3.schemeCategory10);
-            
-           
+
+
             var x = d3.scaleBand()
                 .range([0, width])
                 .padding(0.1);
@@ -168,7 +168,7 @@ function countrystats() {
     // The data held in javascript
     var data = []
     // The AJAX request
-    var xmlhttp = new XMLHttpRequest(); 
+    var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         // Function to process response
         if (this.readyState == 4 && this.status == 200) {
