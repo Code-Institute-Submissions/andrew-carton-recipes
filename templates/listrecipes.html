@@ -7,7 +7,7 @@
 {% block content %}
 
 
-
+    <!-- Bootstrap row/col grid for listing recipes -->
     <div class="container recipe-list-page-container " >
             <div class="row justify-content-center top-border top-padding">
                     <h2 class="myfont">Search By:</h2>
@@ -52,6 +52,7 @@
                     <div class="row">
 
                         {% for x in recipes %}
+                        <!-- Use bootstrap cards -->
                             <div class="col mb-3">
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="static/images/{% print x.image %}" height="10%" width="10%">

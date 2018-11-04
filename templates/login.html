@@ -12,9 +12,11 @@
         </div>
         <div class="row justify-content-center">
 
+            <!-- Carousel example from bootstrap documentation -- rounded option -->
             <div id="carouselExampleSlidesOnly"  class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     {% for f in files %}
+                    <!-- Set one to active in the carousel -->
                         {% if loop.index == 1 %}
                             <div class="carousel-item active">
                                 <img class="d-block w-100 rounded-circle" src="static/images/{% print f %}" alt="">

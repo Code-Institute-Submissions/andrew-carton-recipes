@@ -1,13 +1,16 @@
+
 <!doctype html>
     <head>
             <title>{% block title %}{% endblock %}</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
             <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/recipe.css') }}" />
             <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
+            <!-- Custom includes for file -->
             {% block includes %} {% endblock %}
     </head>
 
     <body class="bg" {% block body_attrs %}{% endblock %}>
+        <!-- Nav bar in bootstrap -->
         <nav class=" navbar navbar-expand-lg navbar-dark fixed-top nbar-black">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -106,12 +109,14 @@
 
 
         {% block content %}{% endblock %}
+        <!-- The footer -->
         <footer class="container-fluid">
             <br /><br />
             <div class="col">
                 <p class="myfont whitefont">©2018 Andrew's Recipes by Andrew Carton</p>
             </div>
         </footer>
+        <!-- Includes -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
