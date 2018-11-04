@@ -5,6 +5,7 @@ from recipedatabase import RecipeDatabase
 
 class RecipeTest(unittest.TestCase):
 
+    # Set up the database and get a connection
     @classmethod
     def setUpClass(self):
         self.database = RecipeDatabase("testing.db")
@@ -12,6 +13,7 @@ class RecipeTest(unittest.TestCase):
         # delete the entire database and test
         self.database.db_delete(self.conn)
 
+    # Close the database connection on tear down
     @classmethod
     def tearDownClass(self):
         self.conn.close()
