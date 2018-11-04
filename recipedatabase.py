@@ -7,7 +7,16 @@ from model.ingredient import Ingredient
 from model.recipe import Recipe
 
 
+""" 
+    RecipeDatabase class:
+
+    This class encapsulates the database information for the application.
+    It holds the table / sql structure and provides abstractions to insert,
+    delete, or select data.
+
+"""
 class RecipeDatabase:
+    # Constructor
     def __init__(self, dbname):
 
         self.engine = create_engine('sqlite:///' + dbname, echo=False)
