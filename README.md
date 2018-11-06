@@ -14,7 +14,7 @@ The motivation of the user to use the product is to maintain a cookbook or colle
 
 The wireframes are illustrated in the ui folder and are designed using an application called Pencil.
 
-The front page (wireframe front-page.png in ui folder) is the first presentation to the user of the web site, as the home page. The home page should provide a warm, friendly feeling to the user and invite the user into the website to explore further. To achieve this end, a colourful background image of a cooking related topic is presented and is persisted across the visit to the website. The background colours are dark colours, and a color scheme for the nav bar and footer are allocated according to these colours. The navigation bar is coloured in black with white coloured text, which is a scheme adopted throughout the rest of website too. The navigation bar invites the user to log in or register along the right-hand side, and further allows them to navigate the rest of the website, including the recipes and the graphs pages. The navigation bar also adapts to a mobile navigation bar depending on the user's device. The main appealing feature of the front page is a carousel - which rotates the different recipe images in the cookbook collection. This feature has a psychological effect on the user, illustrating the tempting visual array of recipes and invites them to explore further the website. 
+The front page (wireframe front-page.png in ui folder) is the first presentation to the user of the web site, as the home page. The home page should provide a warm, friendly feeling to the user and invite the user into the website to explore further. To achieve this end, a colourful background image of a cooking related topic is presented and is persisted across the visit to the website. The appealing font Satisfy provided by google is also used consistently across the site. The background colours are dark colours, and a color scheme for the nav bar and footer are allocated according to these colours. The navigation bar is coloured in black with white coloured text, which is a scheme adopted throughout the rest of website too. The navigation bar invites the user to log in or register along the right-hand side, and further allows them to navigate the rest of the website, including the recipes and the graphs pages. The navigation bar also adapts to a mobile navigation bar depending on the user's device. The main appealing feature of the front page is a carousel - which rotates the different recipe images in the cookbook collection. This feature has a psychological effect on the user, illustrating the tempting visual array of recipes and invites them to explore further the website. 
 
 The recipes page (wireframe recipes-page.png in ui folder) is the main web page and is designed to be as user-centered and user-friendly as possible, with an intuitive feel where the user just 'knows' how to use it by looking at it at a glance. To achieve this end, the search feature of the website is presented in a container around a box, in a standard way, that allows the user to see the search options available at a glance. These options include search by course, ingredient or exclude allergen. The text boxes and search boxes are presented clearly to the user, so it is obvious how this page works. These search options narrow the recipes listed in the main page. The main presentation of this page of course is the recipes list, and this information is presented in an organised manner. Each recipe is given a particular 'card' or 'box' around which it presents the visual and textual information of what it is at a glance. The View button underneath the recipe image, invites the user to investigate that recipe further and redirects to that particular recipe that illustrates more information about it. The number of recipe 'cards' or 'boxes' on the website expands and shrinks according to the users screen, and this allows easy navigation and presentation to users with smaller screens on mobile devices.
 
@@ -26,84 +26,151 @@ The graphs page (wireframe graphs-page.png in the ui folder) is the graph page t
 
 
 
-To install:
-1. Install Flask
-2. Install SQLAlchemy library
-3. Run tabledef.py to setup the database
-4. run recipe_server.py to run the application
-5. (Optionally) run recipetest.py to test the application
-
-
-
 Testing:
-I used a build it yourself testing suite in byotest.py. To build the tests, I started with the requirements of the application. Warning: running the tests will clear the database, but I saved a full database at fulldatabase.db, so you can copy and rename it to recipes.db if you accidently delete it by running the tests. I automated as much of the testing as I could, but left these use cases to test mostly the functionality of the UI. 
 
+Testing - Test Plan:
+The test plan is to cover as much of the code as possible, both in the backend and the frontend of the cookbook application. The items to be tested in the backend are the database functionality. This includes, connecting to the database, authenticating the user, creating a user and password, creating / editing, deleting and updating a recipe. The items to be tested in the frontend include, testing the register / login / logout functionality, the presentation of the recipe list, the results of the search feature, the implementation of the graphs, inserting a new recipe, editing a new recipe and deleting a new recipe. All these features that are tested come from the requirements of the application, so the whole application is tested against them. 
 
-1. Testing the Register functionality
-    a. Run the application
-    b. Go to the login page
-    c. Enter a new username and password
-        i. If succeeded go to login page redirect and check your new name
-        ii. If not succeeded read explanation why and redirect back to login page
+Testing - Test Implementation:
+The test implementation is implemented in two ways - automated and manual. In implementation of the automated testing covers as much as possible of the code that can be automated. The automated testing is implemented in python unit-testing 'unittest' framework, which is part of python. The output of the automated testing, after being run, should be success or failure. 
 
-2. Testing the Login functionality
-    a. Follow steps in 1. to create a username
-    b. On login page attempt to login with username and password provided.
-    c. Attempt to login using a fake username or / and fake password and see if it works
+The manual testing is presented in this document as user-stories and test particularly the graphical user interface, which is difficult to automate. Working through the user stories presented as a way to test the application and ensure the functionality work according to the requirements.
 
-3. Testing the Logout functionality
+Testing - automated testing:
+To run use the command line:
+python -m unittest testing/recipetest.py
+
+The output results after running this should be similar to the below:
+...
+----------------------------------------------------------------------
+Ran 3 tests in 2.392s
+
+OK  
+
+Testing - manual testing:
+
+Here are the user stories, with the results and outcomes noted beneath each.
+
+1. Testing the successful Register functionality of the nav bar or home page
+    a. Go to the home page (which is presented initially)
+    b. Select Register from the navigation bar (top right) or home page (middle)
+	c. Enter a new 'valid' username and password
+    d. Outcome: A message should turn up saying that the register was successful.
+	
+	Result: Test succeeded with expected outcome.
+	
+2. Testing the failed Register functionality of the nav bar or home page
+    a. Go to the home page (which is presented initially)
+    b. Select Register from the navigation bar (top right) or home page (middle)
+	c. Enter a new 'in-valid' username and password
+    d. A message should turn up saying that the register was un-successful and display the error message
+	
+	Test this story with numerous different usernames and passwords including empty ones to ensure the functionality is complete.
+	
+	Result: Test succeeded with expected outcome.
+	
+
+3. Testing the successful Login functionality
+    a. Follow steps in 1. to create a successful username and password
+    b. On navigation bar click Login
+	c. Attempt to login with username and password provided at registration.
+	d. If the login is successful it should present a success message
+	e. It should also display the 'Insert Recipe' option in the navigation bar.
+    
+	Result: Test succeeded with expected outcome.
+	
+4. Testing the failed Login functionality
+	a. Follow steps in 1. to create a successful username and password
+	b. On navigation bar click Login
+	c. Attempt to login with the wrong username and password
+	
+	Test this story with repeatedly with different usernames and passwords including empty ones to ensure functionality is complete.
+	
+	Result: Test succeeded with expected outcome (Does not allow fake or blank logins)
+
+5. Testing the Logout functionality
     a. Follow steps above to login.
-    b. Go to the main page when you login and click logout.
-    c. This should logout and redirect back to login page again.
+    b. Go to the main page after login and click logout on the navigation bar.
+    c. This should logout and redirect back to login page again and remove the 'Insert Recipe' from the navigation bar.
 
-4. Testing the Recipe List
-    a. Go to the recipe list page
-    b. The recipes should be listed
-    c. click on a recipe to view it
-    d. The recipe should be viewed
+	Result: Test succeeded with expected outcome.
+	
+6. Testing the Recipe List
+    a. Go to the Recipes page in the navigation bar
+    b. The recipes should be listed in cards with images and be given a title and description
+	c. There should also be a clickable View Recipe button that works when clicked on.
+	
+	Result: Test succeeded with expected outcome. Buttons all work.
+	
+7. Testing the contents on the Recipe page
+	a. On the Recipe List click the 'View Recipe' button under each recipe.
+	b. Each recipe should have a unique description including course, country, author, views, an image, ingredients and directions.
+	c. The image and text should correspond to the title and description.
+	
+	Result:  Test succeeded with expected outcome. All information displayed correctly.
 
 5. Testing the search recipe
-    a. Enter in an item for search by course e.g. main and click submit
-    b. The list should filter depending on the submitted value
-    c. Try the exact same thing with ingredient and exclude allergen
-    d. The list should be filtered simularly
+    a. On the Recipes page, enter in an item for search by course e.g. main and click submit
+    b. The list should filter depending on the submitted value and display results that are similar to testing in test case 7.
+    c. Try the exact same thing with ingredient (e.g. beef) and exclude allergen (e.g. dairy)
+    d. The list should be filtered simularly and display results similar to testing presented in test case 7.
+	
+	Result: Test succeeded with expected outcome. Searches were refined accordingly.
+	
 
 6. Graphs
     a. Go to the graphs page
-    b. The graphs should display the relevant information reflecting the recipes present
-       from the recipes page
-    
-    a. Add a recipe with an allergen or course
+    b. The graphs should display the relevant information reflecting the recipes present from the recipes page
+	
+    c. Add a recipe with an allergen or new course (e.g. starter)
     b. Check the graph accurately reflects the new data
+	
+	Result: Test succeeded with expected outcome. Graphs displayed correct information and changed when new recipes added.
 
 7. Inserting a recipe
-    a. Make sure you are logged in
+    a. Make sure you are logged in (test story 3)
     b. Go to Insert Recipe page
-    c. Add in all the values
-    d. Submit a photo if you like and hit upload
+    c. Add in all the values to be tested
+    d. Submit a photo if you like and hit upload (a default photo will be used if none is uploaded)
     e. Submit the recipe
-    f. Go back to recipe list and make sure the recipe is displayed
+    f. Go back to recipes page in navigation bar and make sure the recipe is displayed with the correct submitted information.
+	
+	Result: Test succeeded with expected outcome. Recipe was inserted and the recipes page reflected this
 
 8. Deleting a recipe
     a. Go to a recipe you want to delete
     b. Hit delete and confirm deletion
-    c. Go back to recipe list to see that it is gone
+    c. Go back to recipes page to see that it is gone
+	
+	Result: Test succeeded with expected outcome. Recipe was deleted successfully.
 
 9. Editing a recipe
     a. Go to a recipe
     b. Hit Edit and the edit options appear
     c. Select an item to edit - either course, country, recipe list, ingredient list, or sorting the recipe instruction drop and drag list
     d. Hit Save
-    e. Go back to the recipe on the recipe list and see it has changed
+    e. Go back to the recipe on the recipes page and click on it again and see it has changed.
+	f. Do this over again with each item that is editable on the form.
+	
+	Result: Test succeeded with expected outcome. Recipe was edited successfully in all test cases and forms.
 
-## Deployment
+## Installation and Deployment
 
 To install:
-1. Install Flask and Flash-Login
+1. Install Flask
 2. Install SQLAlchemy library
-3. The proc file should take care of the installers
-4. run recipeserver.py to run the application
-5. (Optionally) run testing/recipetest.py unittest to test the application
+3. Run tabledef.py to setup the database
+4. run recipe_server.py to run the application
+5. (Optionally) run unittest recipetest.py to test the application
+
+
+To deploy on heroku:
+1. Create a new project on heroku and give it a unique name - in this case cookbookproj was used.
+2. Under deploy settings link the heroku application to github and choose the master branch to deploy.
+3. Enable Manual Deployment
+4. The requirements.txt lists the dependancies and takes care they are installed on heroku
+5. The proc file should take care of the installers and running the executable file 'recipeserver.py'
+
 
 
 Heroku Deployment: https://cookbookproj.herokuapp.com

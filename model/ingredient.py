@@ -4,6 +4,8 @@
     Encapsulates an ingredient which is a name, allergen and amount.
 
 """
+
+
 class Ingredient():
 
     # Constructor
@@ -11,4 +13,3 @@ class Ingredient():
         self.name = name
         self.allergen = allergen
         self.amount = amount
-

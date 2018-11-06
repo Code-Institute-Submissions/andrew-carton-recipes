@@ -55,8 +55,8 @@ def do_register():
     # Check if username is sufficient -- if not provide error message
     if len(content['username']) <= 3 or len(content['username']) > 20:
         return json.dumps({'success': False, 'message':
-                           'Username must be greater than 3 characters \
-                            and smaller than 20'})
+                           'Username must be greater than 3 characters'
+                           ' and smaller than 20'})
 
     # Check if password is sufficient -- if not provide error message
     if len(content['password']) <= 3 or len(content['password']) > 20:
@@ -94,8 +94,8 @@ def do_login():
     # Do some checking of username string length and provide
     # error message if inadequate
     if len(content['username']) <= 3 or len(content['username']) > 20:
-        return json.dumps({'success': False, 'message': 'Username must be \
-                            greater than 3 characters and smaller than 20'})
+        return json.dumps({'success': False, 'message': 'Username must be'
+                           ' greater than 3 characters and smaller than 20'})
 
     # Same for password
     if len(content['password']) <= 3 or len(content['password']) > 20:
@@ -524,12 +524,9 @@ def updaterecipe():
     x = result.fetchone()
     if x:
         # Update the course and country data
-        stmt = database.recipes.update().values(course=content['course']).where
-        (database.recipes.c.id == content['id'])
+        stmt = database.recipes.update().values(course=content['course']).where(database.recipes.c.id == content['id'])
         conn.execute(stmt)
-        stmt = database.recipes.update().values(
-            country=content['country']).where(
-            database.recipes.c.id == content['id'])
+        stmt = database.recipes.update().values(country=content['country']).where(database.recipes.c.id == content['id'])
         conn.execute(stmt)
     conn.close()
     return 'Thank you'

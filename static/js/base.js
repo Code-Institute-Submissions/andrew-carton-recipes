@@ -18,13 +18,13 @@ function onRegisterSubmit() {
 
         // If success (response 200)
         if (this.readyState == 4 && this.status == 200) {
-            alert("Creation succeeded! Login now!");
-            $('#registerModal').modal('hide');
-        }
-        // If failure (response 500)
-        else if (this.readyState == 4 && this.status == 500) {
             var data = JSON.parse(this.responseText);
-            alert(data['message']);
+            if (data['success'] == true) {
+                alert("Creation succeeded! Login now!");
+                $('#registerModal').modal('hide');
+            } else {
+                alert(data['message']);
+            }
         }
     }
     // Create an object to serialise json
@@ -53,14 +53,15 @@ function onLoginSubmit() {
     xmlhttp.onreadystatechange = function () {
         // On success (200)
         if (this.readyState == 4 && this.status == 200) {
-            alert("Login Successful");
-            $('#loginModal').modal('hide');
-            window.location.replace("/");
-        }
-        // On Failure (500)
-        else if (this.readyState == 4 && this.status == 500) {
             var data = JSON.parse(this.responseText);
-            alert(data['message']);
+            if (data['success'] == true) {
+                alert("Login Successful");
+                $('#loginModal').modal('hide');
+                window.location.replace("/");
+            }
+            else {
+                alert(data['message']);
+            }
         }
     }
     // Create an object for serialisations of json
