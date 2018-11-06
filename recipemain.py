@@ -18,6 +18,8 @@ database = RecipeDatabase("recipes.db")
     Render template 'login.html' with static files and the session
 
 """
+
+
 @app.route('/')
 def home():
 
@@ -35,7 +37,7 @@ def home():
 
     # Pass the files into the template for rendering the carousel
     return render_template('login.html', files=files, session=session)
-    
+
 
 """
     The function do_register() and app route '/register'
@@ -43,6 +45,8 @@ def home():
     for registration purposes, and provide errors if username
     is already taken or password is inadequate
 """
+
+
 @app.route('/register', methods=['POST'])
 def do_register():
     # Deserialise JSON to content data
@@ -50,45 +54,58 @@ def do_register():
 
     # Check if username is sufficient -- if not provide error message
     if len(content['username']) <= 3 or len(content['username']) > 20:
-        return json.dumps({'success':False, 'message': 'Username must be greater than 3 characters and smaller than 20'}), 500, {'ContentType':'application/json'} 
-    
+        return json.dumps({'success': False, 'message':
+                           'Username must be greater than 3 characters \
+                            and smaller than 20'})
+
     # Check if password is sufficient -- if not provide error message
-    if len(content['password']) <= 3 or  len(content['password']) > 20:
-        return json.dumps({'success':False, 'message': 'Password must be greater than 3 characters'}), 500, {'ContentType':'application/json'} 
-    
+    if len(content['password']) <= 3 or len(content['password']) > 20:
+        return json.dumps({'success': False, 'message':
+                           'Password must be greater than 3 characters'})
+
     # If safety checks are passed, connect to database
     conn = database.engine.connect()
     # Register user
-    success = database.user_register(content['username'], content['password'], conn)
+    success = database.user_register(
+        content['username'], content['password'], conn)
     conn.close()
-    # If return is success return a success message otherwise provide username taken error message in json
+    # If return is success return a success message otherwise provide
+    #  username taken error message in json
     if success:
-        return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        return json.dumps({'success': True})
     else:
-        return json.dumps({'success':False, 'message': 'Username taken'}), 500, {'ContentType':'application/json'} 
+        return json.dumps({'success': False, 'message': 'Username taken'})
+
 
 """
     The function do_login and app route '/login':
-    Do server side checking of username and password for login purposes, and provide errors if username
+    Do server side checking of username and password for login purposes,
+    and provide errors if username
     or password is adequate or authentication has failed
 
 """
+
+
 @app.route('/login', methods=['POST'])
 def do_login():
     # Deserialise JSON from frontend
     content = request.get_json()
 
-    # Do some checking of username string length and provide error message if inadequate
+    # Do some checking of username string length and provide
+    # error message if inadequate
     if len(content['username']) <= 3 or len(content['username']) > 20:
-        return json.dumps({'success':False, 'message': 'Username must be greater than 3 characters and smaller than 20'}), 500, {'ContentType':'application/json'} 
-    
+        return json.dumps({'success': False, 'message': 'Username must be \
+                            greater than 3 characters and smaller than 20'})
+
     # Same for password
-    if len(content['password']) <= 3 or  len(content['password']) > 20:
-        return json.dumps({'success':False, 'message': 'Password must be greater than 3 characters'}), 500, {'ContentType':'application/json'} 
-    
+    if len(content['password']) <= 3 or len(content['password']) > 20:
+        return json.dumps({'success': False, 'message':
+                           'Password must be greater than 3 characters'})
+
     # Connect to database and attempt to authenicate
     conn = database.engine.connect()
-    success = database.user_authenticate(content['username'], content['password'], conn)
+    success = database.user_authenticate(
+        content['username'], content['password'], conn)
     conn.close()
 
     # If authentication successful set session variables and print success
@@ -96,15 +113,19 @@ def do_login():
     if success:
         session['logged_in'] = True
         session['user'] = content['username']
-        return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        return json.dumps({'success': True})
     else:
-        return json.dumps({'success':False, 'message': 'Authentication failed'}), 500, {'ContentType':'application/json'} 
+        return json.dumps({'success': False, 'message':
+                           'Authentication failed'})
 
-""" 
+
+"""
     Function: searchexcludeallergen -- '/searchexcludeallergen'.
-    This is an AJAX function to provide the frontend with recipes 
+    This is an AJAX function to provide the frontend with recipes
     tailored to an 'exclude allergen' search
 """
+
+
 @app.route('/searchexcludeallergen')
 def searchexcludeallergen():
     # Get Allergen from attribute in URL
@@ -116,7 +137,7 @@ def searchexcludeallergen():
 
     # Recipes list
     rs = []
-    
+
     # Set if allergen found
     found = 0
 
@@ -153,11 +174,14 @@ def searchexcludeallergen():
     # Serialise to JSON
     return json.dumps(rs)
 
-""" 
+
+"""
     Function: searchbyingredient -- '/searchbyingredient'.
-    This is an AJAX function to provide the frontend with recipes 
+    This is an AJAX function to provide the frontend with recipes
     tailored to an 'ingredient' search
 """
+
+
 @app.route('/searchbyingredient')
 def searchbyingredient():
     # Get ingredient from URL
@@ -197,11 +221,13 @@ def searchbyingredient():
     return json.dumps(rs)
 
 
-""" 
+"""
     Function searchbycourse - app route '/searchbycourse':
     Search for recipes in database by course e.g. starter, main.
     This is an AJAX function that provides data to the frontend
 """
+
+
 @app.route('/searchbycourse')
 def searchbycourse():
     # Get course from URL
@@ -232,17 +258,20 @@ def searchbycourse():
 """
     Function recipe() - app route '/recipe'
     Retrieves the ID of the recipe from the URL
-    and then retrieves that recipe from database, and passes it to recipe.html template.
+    and then retrieves that recipe from database, and passes
+    it to recipe.html template.
 
     Also updates the 'views' counter of that recipe
 
 """
+
+
 @app.route('/recipe')
 def recipe():
     conn = database.engine.connect()
     # Get ID from URL
     idx = request.args.get('id')
-    ## Get the recipe from the database
+    # Get the recipe from the database
     recipe = database.recipe_get(idx, conn)
     selrecipes = select([database.recipes]).where(database.recipes.c.id == idx)
     recipesresult = conn.execute(selrecipes)
@@ -265,6 +294,8 @@ def recipe():
     Renders insertrecipe.html template if user is logged in
 
 """
+
+
 @app.route('/insertrecipe')
 def insert_recipe():
     if session.get('logged_in'):
@@ -276,9 +307,11 @@ def insert_recipe():
 """
     Function ingredientstats() - app route '/ingredientstats'
 
-    This is an AJAX function for the frontend that provides statistics on the 
+    This is an AJAX function for the frontend that provides statistics on the
     amount of allergens in ingredients
 """
+
+
 @app.route('/ingredientstats')
 def ingredientstats():
     # Connect to database and get all recipes
@@ -286,7 +319,7 @@ def ingredientstats():
     s = select([database.recipes])
     result = conn.execute(s)
 
-    ## Ingredient dictionary list 'ingredient name' as key 'amount' as value
+    # Ingredient dictionary list 'ingredient name' as key 'amount' as value
     ings = []
     # Get Ingredient List of each recipe
     for row in result:
@@ -294,7 +327,7 @@ def ingredientstats():
             database.ingredients_list.c.recipe_id == row.id)
         res = conn.execute(select_st)
 
-        # Iterate over ingredients in ingredient list 
+        # Iterate over ingredients in ingredient list
         for _row in res:
             select_st2 = select([database.ingredients]).where(
                 database.ingredients.c.id == _row.ingredient_id)
@@ -302,7 +335,8 @@ def ingredientstats():
             for _row2 in res2:
                 # Set if allergen is found
                 found = 0
-                # Iterate over each allergen found already in the ingredients list
+                # Iterate over each allergen found already in
+                # the ingredients list
                 for i in ings:
                     # If found increase the amount of the allergen by one
                     if i['ingredient'].lower() == _row2.allergen.lower():
@@ -313,7 +347,7 @@ def ingredientstats():
                         # Reset found variable
                         found = 0
 
-                ## If not found in the ingredient allergen list
+                # If not found in the ingredient allergen list
                 # Add a new dictionary entry for that allergen
                 if found == 0 and _row2.allergen != '':
                     d = dict()
@@ -325,11 +359,13 @@ def ingredientstats():
     # Dictionary to JSON serialisation
     return json.dumps(ings)
 
+
 """
     Function countrystats - app route '/countrystats'
     This is an AJAX function for the frontend to provide stats
     for the countries in the recipe database for the graphs
 """
+
 
 @app.route('/countrystats')
 def countrystats():
@@ -363,11 +399,13 @@ def countrystats():
     # Serialise the dictionary list to JSON
     return json.dumps(crs)
 
+
 """
     Function coursetats - app route '/coursestats'
     This is an AJAX function for the frontend to provide stats
     for the courses in the recipe database for the graphs
 """
+
 
 @app.route('/coursestats')
 def coursestats():
@@ -407,6 +445,8 @@ def coursestats():
     Function graphs() - app route '/graphs'
     Render the graphs.html template
 """
+
+
 @app.route('/graphs')
 def graphs():
     return render_template('graphs.html')
@@ -416,6 +456,8 @@ def graphs():
     Function logout() - app route '/logout'
     Set the session logged_in to False
 """
+
+
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
@@ -427,6 +469,8 @@ def logout():
     Get recipes ordered by last in first out
     and pass to template listrecipes.html
 """
+
+
 @app.route('/listrecipes')
 def list_recipes():
     # Order by last first
@@ -435,17 +479,20 @@ def list_recipes():
     result = conn.execute(s)
     rs = []
     for row in result:
-        # Get recipe        
+        # Get recipe
         recipe = database.recipe_get(row.id, conn)
         rs.append(recipe)
 
     conn.close()
     return render_template('listrecipes.html', recipes=rs)
 
+
 """
     Function updaterecipe() - app route '/updateroute'
     Updates the recipe with JSON from frontend
 """
+
+
 @app.route('/updaterecipe', methods=['POST'])
 def updaterecipe():
     # Deserialise JSON to content dictionary
@@ -453,9 +500,9 @@ def updaterecipe():
     conn = database.engine.connect()
 
     # Get the User ID of the author
-    s = select([database.users]).where(database.users.c.name == content['author'])
+    s = select([database.users]).where(
+        database.users.c.name == content['author'])
     result = conn.execute(s)
-    idx = result.fetchone().id
 
     # Delete all ingredients and directions of the 'id' of the recipe
     database.ingredients_delete(content['id'], conn)
@@ -471,16 +518,17 @@ def updaterecipe():
         num = num + 1
 
     # Get the recipe
-    s = select([database.recipes]).where(database.recipes.c.id == content['id'])
+    s = select([database.recipes]).where(
+        database.recipes.c.id == content['id'])
     result = conn.execute(s)
     x = result.fetchone()
     if x:
-        idx = x.id
         # Update the course and country data
-        stmt = database.recipes.update().values(course=content['course']).where(
-            database.recipes.c.id == content['id'])
+        stmt = database.recipes.update().values(course=content['course']).where
+        (database.recipes.c.id == content['id'])
         conn.execute(stmt)
-        stmt = database.recipes.update().values(country=content['country']).where(
+        stmt = database.recipes.update().values(
+            country=content['country']).where(
             database.recipes.c.id == content['id'])
         conn.execute(stmt)
     conn.close()
@@ -491,14 +539,18 @@ def updaterecipe():
     Function insertrecipe - app route '/insertrecipe'
     Insert recipe into database
 """
+
+
 @app.route('/insertrecipe', methods=['POST'])
 def insertrecipe():
     conn = database.engine.connect()
     # Deserialise json from frontend to content dictionary
     content = request.get_json()
-    ## Insert with new data
-    database.recipe_insert(content['name'], content['author'], content['country'], content['course'],
-                  content['ingredients'], content['directions'], content['image'], conn)
+    # Insert with new data
+    database.recipe_insert(content['name'], content['author'],
+                           content['country'], content['course'],
+                           content['ingredients'], content['directions'],
+                           content['image'], conn)
     conn.close()
     return 'Thank you'
 
@@ -507,6 +559,8 @@ def insertrecipe():
     Function uploaded_file - app route '/uploadajax'
     Upload a file to the static/images directory
 """
+
+
 @app.route('/uploadajax', methods=['POST'])
 def uploaded_file():
     file = request.files['file']
@@ -516,10 +570,13 @@ def uploaded_file():
 
     return ''
 
+
 """
     Function delete_recipe - app route '/deleterecipe'
     Delete a recipe with 'id' given
 """
+
+
 @app.route('/deleterecipe', methods=['POST'])
 def delete_recipe():
     content = request.get_json()

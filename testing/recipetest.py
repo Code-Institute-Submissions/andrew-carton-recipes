@@ -1,7 +1,8 @@
+from recipedatabase import RecipeDatabase
 import unittest
 import sys
 sys.path.append('../')
-from recipedatabase import RecipeDatabase
+
 
 class RecipeTest(unittest.TestCase):
 
@@ -17,7 +18,7 @@ class RecipeTest(unittest.TestCase):
     @classmethod
     def tearDownClass(self):
         self.conn.close()
-        
+
     def test_emptydb(self):
         self.assertEqual(self.database.user_count(self.conn) == 0, True)
         self.assertEqual(self.database.recipe_count(self.conn) == 0, True)
@@ -25,12 +26,18 @@ class RecipeTest(unittest.TestCase):
 
     def test_database_user(self):
         # test the database functions for user
-        self.assertEqual(self.database.user_register("mytestuser", "mypass", self.conn), True)
-        self.assertEqual(self.database.user_authenticate("mybaduser", "mypass", self.conn), False)
-        self.assertEqual(self.database.user_authenticate("mytestuser", "mypass", self.conn), True)
-        self.assertEqual(self.database.user_authenticate("mytestuser", "badpass", self.conn), False)
+        self.assertEqual(self.database.user_register("mytestuser",
+                                                     "mypass", self.conn),
+                         True)
+        self.assertEqual(self.database.user_authenticate(
+            "mybaduser", "mypass", self.conn), False)
+        self.assertEqual(self.database.user_authenticate(
+            "mytestuser", "mypass", self.conn), True)
+        self.assertEqual(self.database.user_authenticate(
+            "mytestuser", "badpass", self.conn), False)
         self.database.user_delete("mytestuser", self.conn)
-        self.assertEqual(self.database.user_authenticate("mytestuser", "mypass", self.conn), False)
+        self.assertEqual(self.database.user_authenticate(
+            "mytestuser", "mypass", self.conn), False)
 
     def test_insert_recipe(self):
         # Test insert recipe
@@ -57,17 +64,36 @@ class RecipeTest(unittest.TestCase):
         ingredient3['ingredient'] = 'milk'
         ingredient3['amount'] = '200ml'
         ingredient3['allergen'] = 'dairy'
-        ingreds.append(ingredient3)    
+        ingreds.append(ingredient3)
 
         directions = []
         direction1 = dict()
-        direction1['direction'] = "Sift the flour and salt into a mixing bowl and make a well in the centre. Crack the egg into the well; add the melted butter or oil and half the milk. Gradually draw the flour into the liquid by stirring all the time with a wooden spoon until all the flour has been incorporated and then beat well to make a smooth batter. Stir in the remaining milk. Alternatively, beat all the ingredients together for 1 minute in a blender or food processor. Leave to stand for about 30 minutes, stir again before using."
+        direction1['direction'] = "Sift the flour and salt into a mixing bowl \
+        and make a well in the centre. Crack the egg into the well; add the \
+        melted butter or oil and half the milk. Gradually draw the flour into \
+        the liquid by stirring all the time with a wooden spoon until all the \
+        flour has been incorporated and then beat well to make a smooth \
+        batter. Stir in the remaining milk. Alternatively, beat all \
+         the ingredients together for 1 minute in a  blender or food \
+         processor. Leave to stand for about 30 minutes, stir again \
+         before using."
         directions.append(direction1)
         direction2 = dict()
-        direction2['direction'] = "To make the pancakes, heat a small heavy-based frying until very hot and then turn the heat down to medium. Lightly grease with oil and then ladle in enough batter to coat the base of the pan thinly (about 2 tablsp.), tilting the pan so the mixture spreads evenly. Cook over a moderate heat for 1-2 minutes or until the batter looks dry on the top and begins to brown at the edges. Flip the pancake over with a palette knife or fish slice and cook the second side."
+        direction2[
+            'direction'] = "To make the pancakes, heat a small \
+            heavy-based frying until very hot and then turn the \
+            heat down to medium. Lightly grease with oil and then \
+            ladle in enough batter to coat the base of the pan \
+            thinly (about 2 tablsp.), tilting the pan so the \
+            mixture spreads evenly. Cook over a moderate heat \
+            for 1-2 minutes or until the batter looks dry on \
+            the top and begins to brown at the edges. Flip the \
+            pancake over with a palette knife or fish slice and \
+            cook the second side."
         directions.append(direction2)
 
-        recipeid = self.database.recipe_insert(name, author, country, course, ingreds, directions, "", self.conn)
+        recipeid = self.database.recipe_insert(
+            name, author, country, course, ingreds, directions, "", self.conn)
 
         # Test everything was inserted in correctly
         self.assertEqual(self.database.user_count(self.conn) == 1, True)
