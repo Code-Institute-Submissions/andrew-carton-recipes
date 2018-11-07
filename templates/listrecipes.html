@@ -15,32 +15,33 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <div id="filter" class="filter-padding">
-                        <form action="javascript:searchByCourse();" method="POST">
+                        <form>
                             <h5 class="myfont">Course:</h5>
                             <input type="text" name="course" id="course">
-                            <input type="submit" value="Search" class="btn btn-primary myfont">
                         </form>
                     </div>
                 </div>
                 <div class="col">
                     <div id="filter" class="filter-padding">
-                        <form action="javascript:searchByIngredient();" method="POST">
+                        <form>
                             <h5 class="myfont" >Ingredient:</h5>
                             <input type="text" name="ingredient" id="ingredient">
-                            <input type="submit" value="Search" class="btn btn-success myfont">
                         </form>
                     </div>
                 </div>
                 <div class="col">
                     <div id="filter" class="filter-padding">
-                        <form action="javascript:searchByAllergen();" method="POST">
+                        <form>
                             <h5 class="myfont">Exclude Allergen:</h5>
                             <input type="text" name="allergen"  id="allergen">
-                            <input type="submit" value="Search" class="btn btn-info myfont">
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-center m-3">
+                <button type="button" class="btn btn-primary myfont" onclick="javascript:searchRecipes();">Search</button>
+            </div>
+            
 
 
             <div class="row justify-content-center top-border top-padding">

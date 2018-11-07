@@ -119,17 +119,63 @@ def do_login():
                            'Authentication failed'})
 
 
+def is_multiple_search(allergen, course, ingredient):
+    if (allergen and (course or ingredient)) or (course and (allergen or ingredient)) or (ingredient and (allergen or course)) or (ingredient and allergen and course):
+        return True
+    else:
+        return False
+
+
 """
-    Function: searchexcludeallergen -- '/searchexcludeallergen'.
+    Function: search -- '/search'.
+    This is an AJAX function to provide the frontend with recipes
+    tailored to the search criteria
+"""
+
+
+@app.route('/search')
+def search():
+    # Get the attributes from URL
+    allergen = request.args.get('allergen')
+    course = request.args.get('course')
+    ingredient = request.args.get('ingredient')
+
+    # Recipes list
+    rs = []
+    rs.extend(searchexcludeallergen(allergen))
+    rs.extend(searchbycourse(course))
+    rs.extend(searchbyingredient(ingredient))
+
+    mult_search = is_multiple_search(allergen, course, ingredient)
+    new_rs = []
+    if (mult_search):
+        seen = set()
+        
+        for d in rs:
+            # Change to tuple to hash
+            t = tuple(d.items())
+            if t not in seen:
+                # Add to set
+                seen.add(t)
+            else:
+                new_rs.append(d)
+    else:
+        new_rs = rs
+
+
+    return json.dumps(new_rs)
+
+
+"""
+    Function: searchexcludeallergen
     This is an AJAX function to provide the frontend with recipes
     tailored to an 'exclude allergen' search
 """
 
 
-@app.route('/searchexcludeallergen')
-def searchexcludeallergen():
-    # Get Allergen from attribute in URL
-    allergen = request.args.get('allergen')
+def searchexcludeallergen(allergen):
+    if not allergen or allergen == '':
+        return []
     # Connect to Database and get recipes
     conn = database.engine.connect()
     s = select([database.recipes])
@@ -171,21 +217,19 @@ def searchexcludeallergen():
             found = 0
 
     conn.close()
-    # Serialise to JSON
-    return json.dumps(rs)
+    return rs
 
 
 """
-    Function: searchbyingredient -- '/searchbyingredient'.
+    Function: searchbyingredient 
     This is an AJAX function to provide the frontend with recipes
     tailored to an 'ingredient' search
 """
 
 
-@app.route('/searchbyingredient')
-def searchbyingredient():
-    # Get ingredient from URL
-    ingredient = request.args.get('ingredient')
+def searchbyingredient(ingredient):
+    if not ingredient or ingredient == '':
+        return []
     # Get all recipes
     s = select([database.recipes])
     conn = database.engine.connect()
@@ -217,21 +261,20 @@ def searchbyingredient():
                     r['image'] = row.image
                     rs.append(r)
     conn.close()
-    # Serialise JSON object
-    return json.dumps(rs)
+    return rs
 
 
 """
-    Function searchbycourse - app route '/searchbycourse':
+    Function searchbycourse 
     Search for recipes in database by course e.g. starter, main.
     This is an AJAX function that provides data to the frontend
 """
 
 
-@app.route('/searchbycourse')
-def searchbycourse():
-    # Get course from URL
-    course = request.args.get('course')
+def searchbycourse(course):
+
+    if not course or course == '':
+        return []
     # Connect to database and select by course (case insenstivie match)
     conn = database.engine.connect()
     s = select([database.recipes]).where(func.lower(
@@ -251,8 +294,8 @@ def searchbycourse():
         r['image'] = row.image
         rlist.append(r)
     conn.close()
-    # Serialise JSON object
-    return json.dumps(rlist)
+
+    return rlist
 
 
 """
@@ -524,9 +567,11 @@ def updaterecipe():
     x = result.fetchone()
     if x:
         # Update the course and country data
-        stmt = database.recipes.update().values(course=content['course']).where(database.recipes.c.id == content['id'])
+        stmt = database.recipes.update().values(course=content['course']).where(
+            database.recipes.c.id == content['id'])
         conn.execute(stmt)
-        stmt = database.recipes.update().values(country=content['country']).where(database.recipes.c.id == content['id'])
+        stmt = database.recipes.update().values(country=content['country']).where(
+            database.recipes.c.id == content['id'])
         conn.execute(stmt)
     conn.close()
     return 'Thank you'
