@@ -119,11 +119,6 @@ def do_login():
                            'Authentication failed'})
 
 
-def is_multiple_search(allergen, course, ingredient):
-    if (allergen and (course or ingredient)) or (course and (allergen or ingredient)) or (ingredient and (allergen or course)) or (ingredient and allergen and course):
-        return True
-    else:
-        return False
 
 
 """
@@ -132,6 +127,21 @@ def is_multiple_search(allergen, course, ingredient):
     tailored to the search criteria
 """
 
+
+def append_duplicates(rs):
+    new_rs = []
+    seen = set()
+        
+    for d in rs:
+        # Change to tuple to hash
+        t = tuple(d.items())
+        if t not in seen:
+            # Add to set
+            seen.add(t)
+        else:
+            new_rs.append(d)
+
+    return new_rs
 
 @app.route('/search')
 def search():
@@ -142,28 +152,41 @@ def search():
 
     # Recipes list
     rs = []
-    rs.extend(searchexcludeallergen(allergen))
-    rs.extend(searchbycourse(course))
-    rs.extend(searchbyingredient(ingredient))
+    """ Algorithm:
+        if all three searches:
+            - get intersection of the three
+        else if any two
+            - get intersection of the two
+        else if any one
+            -return list
+    """
 
-    mult_search = is_multiple_search(allergen, course, ingredient)
-    new_rs = []
-    if (mult_search):
-        seen = set()
-        
-        for d in rs:
-            # Change to tuple to hash
-            t = tuple(d.items())
-            if t not in seen:
-                # Add to set
-                seen.add(t)
-            else:
-                new_rs.append(d)
-    else:
-        new_rs = rs
-
-
-    return json.dumps(new_rs)
+    if allergen and course and ingredient:
+        rs.extend(searchexcludeallergen(allergen))
+        rs.extend(searchbycourse(course))
+        rs = append_duplicates(rs)
+        rs.extend(searchbyingredient(ingredient))
+        rs = append_duplicates(rs)
+    elif (allergen and course):
+        rs.extend(searchexcludeallergen(allergen))
+        rs.extend(searchbycourse(course))
+        rs = append_duplicates(rs)
+    elif (allergen and ingredient):
+        rs.extend(searchexcludeallergen(allergen))
+        rs.extend(searchbyingredient(ingredient))
+        rs = append_duplicates(rs)
+    elif (course and ingredient):
+        rs.extend(searchbycourse(course))
+        rs.extend(searchbyingredient(ingredient))
+        rs = append_duplicates(rs)
+    elif allergen:
+        rs.extend(searchexcludeallergen(allergen))
+    elif course:
+        rs.extend(searchbycourse(course))
+    elif ingredient:
+        rs.extend(searchbyingredient(ingredient))
+    
+    return json.dumps(rs)
 
 
 """
