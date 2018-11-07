@@ -243,6 +243,7 @@ function addRemove() {
 // the user hits the edit button
 function addDirectionForm() {
     var iform = document.getElementById("directionform");
+    iform.className = "directions-form recipe-padding m-2"
     // Create a form
     f = document.createElement("form");
     // Action
@@ -254,13 +255,14 @@ function addDirectionForm() {
     i1.type = "text";
     i1.id = "direction";
     i1.setAttribute('size', 50);
+    i1.className = "form-small-margin", 
     i1.placeholder = "Direction";
     f.appendChild(i1);
 
     // Button
     i4 = document.createElement("input");
     i4.type = "submit";
-    i4.className = "btn btn-primary myfont";
+    i4.className = "form-small-margin btn btn-primary myfont";
     i4.value = "Add Direction";
     f.appendChild(i4);
 
@@ -313,6 +315,7 @@ function addCountryForm() {
 
 function addIngredientForm() {
     var iform = document.getElementById("ingredientform");
+    iform.className = "recipe-ingredients-form recipe-padding m-2"
     // Form
     f = document.createElement("form");
     // Action calls addIngredient() function in javascript
@@ -323,6 +326,7 @@ function addIngredientForm() {
     i1 = document.createElement("input");
     i1.type = "text";
     i1.id = "ingredient";
+    i1.className = "form-small-margin",
     i1.placeholder = "Ingredient";
     f.appendChild(i1);
 
@@ -330,6 +334,7 @@ function addIngredientForm() {
     i2.type = "text";
     i2.id = "amount";
     i2.setAttribute('size', 10);
+    i2.className = "form-small-margin",
     i2.placeholder = "Amount";
     f.appendChild(i2);
 
@@ -337,12 +342,14 @@ function addIngredientForm() {
     i3.type = "text";
     i3.id = "allergen";
     i3.setAttribute('size', 10);
+    i3.className = "form-small-margin",
     i3.placeholder = "Allergen";
     f.appendChild(i3);
 
     i4 = document.createElement("input");
     i4.type = "submit";
-    i4.className = "btn btn-primary myfont";
+    i4.className = "form-small-margin btn btn-primary myfont";
+   
     i4.value = "Add Ingredient";
     f.appendChild(i4);
 
