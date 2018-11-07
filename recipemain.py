@@ -119,19 +119,9 @@ def do_login():
                            'Authentication failed'})
 
 
-
-
-"""
-    Function: search -- '/search'.
-    This is an AJAX function to provide the frontend with recipes
-    tailored to the search criteria
-"""
-
-
 def append_duplicates(rs):
     new_rs = []
     seen = set()
-        
     for d in rs:
         # Change to tuple to hash
         t = tuple(d.items())
@@ -142,6 +132,13 @@ def append_duplicates(rs):
             new_rs.append(d)
 
     return new_rs
+
+"""
+    Function: search -- '/search'.
+    This is an AJAX function to provide the frontend with recipes
+    tailored to the search criteria
+"""
+
 
 @app.route('/search')
 def search():
@@ -185,7 +182,6 @@ def search():
         rs.extend(searchbycourse(course))
     elif ingredient:
         rs.extend(searchbyingredient(ingredient))
-    
     return json.dumps(rs)
 
 
@@ -244,7 +240,7 @@ def searchexcludeallergen(allergen):
 
 
 """
-    Function: searchbyingredient 
+    Function: searchbyingredient
     This is an AJAX function to provide the frontend with recipes
     tailored to an 'ingredient' search
 """
@@ -288,7 +284,7 @@ def searchbyingredient(ingredient):
 
 
 """
-    Function searchbycourse 
+    Function searchbycourse
     Search for recipes in database by course e.g. starter, main.
     This is an AJAX function that provides data to the frontend
 """
