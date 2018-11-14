@@ -49,7 +49,12 @@ function coursesstats() {
 
             // Add the text label
             g.append("text").attr("transform", function (d) {
-                return "translate(" + labelArc.centroid(d) + ")";
+                var centroid = arc.centroid(d);
+				d3.select(this)
+					.attr('x', centroid[0])
+					.attr('y', centroid[1])
+					.attr('dy', '0.33em')
+					.text(d.label);
             }).text(function (d) {
                 return d.data.course;
             })
@@ -135,7 +140,7 @@ function ingredientstats() {
                     return height - y(d.amount);
                 })
                 .attr("fill", function (d) {
-                    return color(data.ingredient);
+                    return color(d.ingredient);
                 });
 
             svg.append("g")
