@@ -3,6 +3,7 @@
     <head>
             <title>{% block title %}{% endblock %}</title>
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
             <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/recipe.css') }}" />
             <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet">
             <!-- Custom includes for file -->
@@ -22,28 +23,28 @@
             <div class="collapse navbar-collapse w-100 order-2 dual-collapse2" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item {% block nav_home %}{% endblock %}" >
-                        <a class="nav-link custom-nav myfont"  href="/">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link custom-nav myfont"  href="/"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item {% block nav_rlist %}{% endblock %}" >
-                        <a class="nav-link custom-nav myfont"  href="/listrecipes">Recipes</a>
+                        <a class="nav-link custom-nav myfont"  href="/listrecipes"><i class="fas fa-utensils"></i> Recipes</a>
                     </li>
                     <li class="nav-item {% block nav_graphs %}{% endblock %}"   >
-                         <a class="nav-link custom-nav myfont" href="/graphs">Graphs</a>
+                         <a class="nav-link custom-nav myfont" href="/graphs"><i class="fas fa-chart-pie"></i> Graphs</a>
                     </li>
                     {% if session.logged_in %}
                     <li class="nav-item">
-                            <a class="nav-link {% block nav_ins %}{% endblock %} custom-nav myfont " href="/insertrecipe">Insert Recipe</a>
+                            <a class="nav-link {% block nav_ins %}{% endblock %} custom-nav myfont " href="/insertrecipe"><i class="fas fa-folder-plus"></i> Insert Recipe</a>
                         </li>
 
                     <li class="nav-item">
-                        <a class="nav-link custom-nav myfont " href="/logout">Logout</a>
+                        <a class="nav-link custom-nav myfont " href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                            <a class="nav-link custom-nav myfont " data-toggle="modal" data-target="#registerModal">Register</a>
+                            <a class="nav-link custom-nav myfont " data-toggle="modal" data-target="#registerModal"><i class="fas fa-user-plus"></i> Register</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link custom-nav myfont " data-toggle="modal" data-target="#loginModal">Login</a>
+                            <a class="nav-link custom-nav myfont " data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> Login</a>
                     </li>
                     {% endif %}
                 </ul>
